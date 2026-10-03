@@ -1,4 +1,5 @@
-﻿using ECommerceOMS.Models.Identity;
+﻿using ECommerceOMS.Models;
+using ECommerceOMS.Models.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,6 +13,7 @@ namespace ECommerceOMS.Data
         {
         }
 
+        public DbSet<Product> Products { get; set; }
 
     }
 }
