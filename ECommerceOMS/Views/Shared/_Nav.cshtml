@@ -24,15 +24,7 @@
 
         if (role == RoleType.Admin.ToName() || role == RoleType.SuperAdmin.ToName())
         {
-            <a asp-controller="AdminProducts" asp-action="Index">All Products</a>
-            <a asp-controller="AdminCarts" asp-action="Index">All Carts</a>
-            <a asp-controller="AdminOrders" asp-action="Index">All Orders</a>
-            <a asp-controller="UserManagement" asp-action="Index">Manage Users</a>
-        }
-
-        if (role == RoleType.SuperAdmin.ToName())
-        {
-            <a asp-controller="AdminManagement" asp-action="Index">Manage Admins</a>
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index">Admin Dashboard</a>
         }
 
         <a asp-controller="Account" asp-action="Logout">Logout</a>
