@@ -20,6 +20,7 @@
             <th>Email</th>
             <th>Display Name</th>
             <th>Role</th>
+            
             <th>Actions</th>
         </tr>
     </thead>
@@ -33,30 +34,14 @@
                 <td>@user.DisplayName</td>
                 <td>@role</td>
                 <td>
-                    @if (User.IsInRole(RoleType.SuperAdmin.ToName()))
-                    {
-                        <form asp-area="Admin" asp-controller="UserManagement" asp-action="AssignRole" method="post">
-                            <input type="hidden" name="targetEmail" value="@user.Email" />
-                            <select name="newRole">
-                                <option value="@RoleType.Buyer">Buyer</option>
-                                <option value="@RoleType.Seller">Seller</option>
-                                <option value="@RoleType.Admin">Admin</option>
-                                <option value="@RoleType.SuperAdmin">SuperAdmin</option>
-                            </select>
-                            <button type="submit">Change Role</button>
-                        </form>
-                    }
-                    else if (User.IsInRole(RoleType.Admin.ToName()))
-                    {
-                        <form asp-area="Admin" asp-controller="UserManagement" asp-action="AssignRole" method="post">
-                            <input type="hidden" name="targetEmail" value="@user.Email" />
-                            <select name="newRole">
-                                <option value="@RoleType.Buyer">Buyer</option>
-                                <option value="@RoleType.Seller">Seller</option>
-                            </select>
-                            <button type="submit">Change Role</button>
-                        </form>
-                    }
+                    <form asp-area="Admin" asp-controller="UserManagement" asp-action="AssignRole" method="post">
+                        <input type="hidden" name="targetEmail" value="@user.Email" />
+                        <select name="newRole">
+                            <option value="@RoleType.Buyer">Buyer</option>
+                            <option value="@RoleType.Seller">Seller</option>
+                        </select>
+                        <button type="submit">Change Role</button>
+                    </form>
                 </td>
             </tr>
         }

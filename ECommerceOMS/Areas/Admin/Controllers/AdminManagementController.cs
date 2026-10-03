@@ -23,16 +23,16 @@ namespace ECommerceOMS.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PromoteToSuperAdmin(string targetEmail)
+        public async Task<IActionResult> PromoteToSuperAdmin(string email)
         {
             var actingUserEmail = User.Identity?.Name;
             if (actingUserEmail == null)
                 return Unauthorized();
 
-            if (actingUserEmail == targetEmail)
+            if (actingUserEmail == email)
                 return Unauthorized();
 
-            var success = await _adminService.AssignRoleAsync(actingUserEmail, targetEmail, Models.Identity.RoleType.SuperAdmin);
+            var success = await _adminService.AssignRoleAsync(actingUserEmail, email, Models.Identity.RoleType.SuperAdmin);
             if (!success)
                 TempData["Error"] = "Promotion not allowed.";
 
@@ -40,16 +40,16 @@ namespace ECommerceOMS.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DemoteToAdmin(string targetEmail)
+        public async Task<IActionResult> DemoteToAdmin(string email)
         {
             var actingUserEmail = User.Identity?.Name;
             if (actingUserEmail == null)
                 return Unauthorized();
 
-            if (actingUserEmail == targetEmail)
+            if (actingUserEmail == email)
                 return Unauthorized();
 
-            var success = await _adminService.AssignRoleAsync(actingUserEmail, targetEmail, Models.Identity.RoleType.Admin);
+            var success = await _adminService.AssignRoleAsync(actingUserEmail, email, Models.Identity.RoleType.Admin);
             if (!success)
                 TempData["Error"] = "Promotion not allowed.";
 
