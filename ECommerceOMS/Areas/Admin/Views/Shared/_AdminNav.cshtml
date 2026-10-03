@@ -1,0 +1,21 @@
+﻿@using System.Security.Claims
+@using ECommerceOMS.Models.Identity
+
+<nav>
+    <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+    <a asp-area="Admin" asp-controller="Home" asp-action="Index">Admin Dashboard</a>
+    <a asp-area="Admin" asp-controller="Products" asp-action="Index">Products</a>
+    <a asp-area="Admin" asp-controller="Carts" asp-action="Index">Carts</a>
+    <a asp-area="Admin" asp-controller="Orders" asp-action="Index">Orders</a>
+    <a asp-area="Admin" asp-controller="UserManagement" asp-action="Index">Users</a>
+
+    @{
+        var role = User.FindFirst(ClaimTypes.Role)?.Value;
+        if (role == RoleType.SuperAdmin.ToName())
+        {
+            <a asp-area="Admin" asp-controller="AdminManagement" asp-action="Index">Admins</a>
+        }
+    }
+
+    <a asp-area="" asp-controller="Account" asp-action="Logout">Logout</a>
+</nav>

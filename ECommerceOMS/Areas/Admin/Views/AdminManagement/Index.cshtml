@@ -1,0 +1,65 @@
+﻿@using ECommerceOMS.Models.Identity
+@using ECommerceOMS.Services
+@model List<ApplicationUser>
+@inject UserService UserService
+
+@{
+    Layout = "/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>Admin Management</h1>
+
+@if (TempData["Error"] is string error)
+{
+    <div>@error</div>
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Display Name</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var admin in Model)
+        {
+            if (User.Identity.Name != admin.UserName)
+            {
+                var role = await UserService.GetRoleAsync(admin.Email);
+
+                <tr>
+                    <td>@admin.Email</td>
+                    <td>@admin.DisplayName</td>
+                    <td>@role</td>
+                    <td>@(admin.isLocked ? "Locked" : "Unlocked")</td>
+                    <td>
+                        @if (role.Equals(RoleType.Admin.ToName()))
+                        {
+                            <form asp-area="Admin" asp-controller="AdminManagement" asp-action="PromoteToSuperAdmin" method="post">
+                                <input type="hidden" name="email" value="@admin.Email" />
+                                <button type="submit">Promote to SuperAdmin</button>
+                            </form>
+                        }
+                        else if (role.Equals(RoleType.SuperAdmin.ToName()))
+                        {
+                            <form asp-area="Admin" asp-controller="AdminManagement" asp-action="DemoteToAdmin" method="post">
+                                <input type="hidden" name="email" value="@admin.Email" />
+                                <button type="submit">Demote to Admin</button>
+                            </form>
+                        }
+                        <form asp-area="Admin" asp-controller="AdminManagement" asp-action="ToggleLock" method="post">
+                            <input type="hidden" name="email" value="@admin.Email" />
+                            <button type="submit">
+                                @(admin.isLocked ? "Unlock" : "Lock")
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,0 +1,56 @@
+﻿@using ECommerceOMS.Models.Identity
+@using ECommerceOMS.Services
+@model List<ApplicationUser>
+@inject UserService UserService
+
+@{
+    Layout = "/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h1>User Management</h1>
+
+@if (TempData["Error"] is string error)
+{
+    <div>@error</div>
+}
+
+<table>
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Display Name</th>
+            <th>Role</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            var role = await UserService.GetRoleAsync(user.Email);
+
+            <tr>
+                <td>@user.Email</td>
+                <td>@user.DisplayName</td>
+                <td>@role</td>
+                <td>@(user.isLocked ? "Locked" : "Unlocked")</td>
+                <td>
+                    <form asp-area="Admin" asp-controller="UserManagement" asp-action="ChangeRole" method="post">
+                        <input type="hidden" name="email" value="@user.Email" />
+                        <select name="newRole">
+                            <option value="@RoleType.Buyer">Buyer</option>
+                            <option value="@RoleType.Seller">Seller</option>
+                        </select>
+                        <button type="submit">Change Role</button>
+                    </form>
+                    <form asp-area="Admin" asp-controller="UserManagement" asp-action="ToggleLock" method="post">
+                        <input type="hidden" name="email" value="@user.Email" />
+                        <button type="submit">
+                            @(user.isLocked ? "Unlock" : "Lock")
+                            </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -10,10 +10,12 @@ namespace ECommerceOMS.Controllers
     public class AccountController : Controller
     {
         private readonly AccountService _accountService;
+        private readonly UserService _userService;
 
-        public AccountController(AccountService accountService)
+        public AccountController(AccountService accountService, UserService userService)
         {
             _accountService = accountService;
+            _userService = userService;
         }
 
         [HttpGet]
@@ -34,7 +36,7 @@ namespace ECommerceOMS.Controllers
                 return View(model);
             }
 
-            var role = await _accountService.GetRoleAsync(model.Email);
+            var role = await _userService.GetRoleAsync(model.Email);
 
             return role switch
             {

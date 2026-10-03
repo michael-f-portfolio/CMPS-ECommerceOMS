@@ -15,6 +15,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // DI
 // Services
 builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<AdminService>();
 
 // Repositories
 builder.Services.AddScoped<UserRepository>();
@@ -35,6 +37,11 @@ builder.Services.AddAuthorization(options =>
 
     options.AddPolicy("RequireBuyer", policy =>
         policy.RequireRole(RoleType.Buyer.ToName()));
+});
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.AccessDeniedPath = "/AccessDenied";
 });
 
 builder.Services.AddControllersWithViews();
@@ -61,6 +68,10 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "areas",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
 app.MapControllerRoute(
     name: "default",
