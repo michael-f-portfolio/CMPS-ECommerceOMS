@@ -1,0 +1,30 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>@ViewData["Title"]</title>
+    </head>
+    <body>
+        <header>
+        <nav>
+            <a asp-controller="Home" asp-action="Index">Home</a>
+            @if (User.Identity.IsAuthenticated)
+            {
+                 <a asp-controller="Account" asp-action="Logout">Logout</a>   
+            }
+            else
+            {
+                <a asp-controller="Account" asp-action="Login">Login</a>
+                <a asp-controller="Account" asp-action="Register">Register</a>
+            }
+
+        </nav>
+        </header>
+
+        <main>
+            @RenderBody()
+        </main>
+
+        @RenderSection("Scripts", required: false)
+    </body>
+</html>
