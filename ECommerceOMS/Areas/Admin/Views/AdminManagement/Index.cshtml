@@ -18,7 +18,9 @@
     <thead>
         <tr>
             <th>Email</th>
+            <th>Display Name</th>
             <th>Role</th>
+            <th>Status</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -31,7 +33,9 @@
 
                 <tr>
                     <td>@admin.Email</td>
+                    <td>@admin.DisplayName</td>
                     <td>@role</td>
+                    <td>@(admin.isLocked ? "Locked" : "Unlocked")</td>
                     <td>
                         @if (role.Equals(RoleType.Admin.ToName()))
                         {
@@ -47,6 +51,12 @@
                                 <button type="submit">Demote to Admin</button>
                             </form>
                         }
+                        <form asp-area="Admin" asp-controller="AdminManagement" asp-action="ToggleLock" method="post">
+                            <input type="hidden" name="email" value="@admin.Email" />
+                            <button type="submit">
+                                @(admin.isLocked ? "Unlock" : "Lock")
+                            </button>
+                        </form>
                     </td>
                 </tr>
             }

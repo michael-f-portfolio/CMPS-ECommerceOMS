@@ -37,5 +37,11 @@ namespace ECommerceOMS.Repositories
         {
             return Task.FromResult(_userManager.Users.ToList());
         }
+
+        public Task SetLockoutEndDateAsync(ApplicationUser user, DateTimeOffset? lockoutEnd)
+            => _userManager.SetLockoutEndDateAsync(user, lockoutEnd);
+
+        public Task ResetAccessFailedCountAsync(ApplicationUser user)
+            => _userManager.ResetAccessFailedCountAsync(user);
     }
 }

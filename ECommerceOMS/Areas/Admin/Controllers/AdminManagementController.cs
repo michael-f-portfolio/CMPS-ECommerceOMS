@@ -32,7 +32,7 @@ namespace ECommerceOMS.Areas.Admin.Controllers
             if (actingUserEmail == email)
                 return Unauthorized();
 
-            var success = await _adminService.AssignRoleAsync(actingUserEmail, email, Models.Identity.RoleType.SuperAdmin);
+            var success = await _adminService.ChangeRoleAsync(actingUserEmail, email, Models.Identity.RoleType.SuperAdmin);
             if (!success)
                 TempData["Error"] = "Promotion not allowed.";
 
@@ -49,12 +49,23 @@ namespace ECommerceOMS.Areas.Admin.Controllers
             if (actingUserEmail == email)
                 return Unauthorized();
 
-            var success = await _adminService.AssignRoleAsync(actingUserEmail, email, Models.Identity.RoleType.Admin);
+            var success = await _adminService.ChangeRoleAsync(actingUserEmail, email, Models.Identity.RoleType.Admin);
             if (!success)
                 TempData["Error"] = "Promotion not allowed.";
 
             return RedirectToAction(nameof(Index));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ToggleLock(string email)
+        {
+            var actingEmail = User.Identity?.Name;
+            var success = await _adminService.ToggleLockAsync(actingEmail, email);
+
+            if (!success)
+                TempData["Error"] = "Unable to toggle lock";
+
+            return RedirectToAction(nameof(Index));
+        }
     }
 }

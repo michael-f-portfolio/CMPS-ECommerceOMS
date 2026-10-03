@@ -20,7 +20,7 @@
             <th>Email</th>
             <th>Display Name</th>
             <th>Role</th>
-            
+            <th>Status</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -33,14 +33,21 @@
                 <td>@user.Email</td>
                 <td>@user.DisplayName</td>
                 <td>@role</td>
+                <td>@(user.isLocked ? "Locked" : "Unlocked")</td>
                 <td>
-                    <form asp-area="Admin" asp-controller="UserManagement" asp-action="AssignRole" method="post">
-                        <input type="hidden" name="targetEmail" value="@user.Email" />
+                    <form asp-area="Admin" asp-controller="UserManagement" asp-action="ChangeRole" method="post">
+                        <input type="hidden" name="email" value="@user.Email" />
                         <select name="newRole">
                             <option value="@RoleType.Buyer">Buyer</option>
                             <option value="@RoleType.Seller">Seller</option>
                         </select>
                         <button type="submit">Change Role</button>
+                    </form>
+                    <form asp-area="Admin" asp-controller="UserManagement" asp-action="ToggleLock" method="post">
+                        <input type="hidden" name="email" value="@user.Email" />
+                        <button type="submit">
+                            @(user.isLocked ? "Unlock" : "Lock")
+                            </button>
                     </form>
                 </td>
             </tr>

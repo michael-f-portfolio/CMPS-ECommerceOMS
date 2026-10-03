@@ -30,15 +30,27 @@ namespace ECommerceOMS.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AssignRole(string targetEmail, RoleType newRole)
+        public async Task<IActionResult> ChangeRole(string email, RoleType newRole)
         {
             var actingUserEmail = User.Identity?.Name;
             if (actingUserEmail == null)
                 return Unauthorized();
 
-            var success = await _adminService.AssignRoleAsync(actingUserEmail, targetEmail, newRole);
+            var success = await _adminService.ChangeRoleAsync(actingUserEmail, email, newRole);
             if (!success)
                 TempData["Error"] = "Role change not allowed.";
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ToggleLock(string email)
+        {
+            var actingEmail = User.Identity?.Name;
+            var success = await _adminService.ToggleLockAsync(actingEmail, email);
+
+            if (!success)
+                TempData["Error"] = "Unable to toggle lock";
 
             return RedirectToAction(nameof(Index));
         }

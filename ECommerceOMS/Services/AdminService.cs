@@ -12,7 +12,7 @@ namespace ECommerceOMS.Services
             _userRepository = userRepository;
         }
 
-        public async Task<bool> AssignRoleAsync(string actingUserEmail, string targetEmail, RoleType newRole)
+        public async Task<bool> ChangeRoleAsync(string actingUserEmail, string targetEmail, RoleType newRole)
         {
             var actingUser = await _userRepository.FindByEmailAsync(actingUserEmail);
             if (actingUser == null) return false;
@@ -71,6 +71,70 @@ namespace ECommerceOMS.Services
                 _userRepository.GetRoleAsync(u).Result.Contains(RoleType.SuperAdmin.ToName())
                 ).ToList();
                 
+        }
+
+        // Lockout method, would need a SuperDuperAdmin to lockout SuperAdmin, beyond scope
+        public async Task<bool> ToggleLockAsync(string actingUserEmail, string targetEmail)
+        {
+            var actingUser = await _userRepository.FindByEmailAsync(actingUserEmail);
+            if (actingUser == null) 
+                return false;
+
+            var actingRole = (await _userRepository.GetRoleAsync(actingUser));
+            if (actingRole == null)
+                return false;
+
+            var targetUser = await _userRepository.FindByEmailAsync(targetEmail);
+            if (targetUser == null) 
+                return false;
+
+            var targetRole = (await _userRepository.GetRoleAsync(targetUser));
+
+            // SuperAdmins cannot be locked out
+            if (targetRole == null || 
+                targetRole == RoleType.SuperAdmin.ToName())
+                return false;
+
+            // Don't lock yourself
+            if (actingUserEmail == targetEmail)
+                return false;
+
+            // SuperAdmin - Can lockout Buyer, Seller, and Admin
+            if (actingRole == RoleType.SuperAdmin.ToName())
+            {
+                if (targetUser.isLocked)
+                {
+                    await _userRepository.SetLockoutEndDateAsync(targetUser, null);
+                    await _userRepository.ResetAccessFailedCountAsync(targetUser);
+                }
+                else
+                {
+                    await _userRepository.SetLockoutEndDateAsync(targetUser, DateTimeOffset.UtcNow.AddYears(100));
+                }
+                return true;
+            }
+
+            // Admin - Can lockout Buyers and Seller
+            if (actingRole == RoleType.Admin.ToName())
+            {
+                // Admins cannot lockout other Admins
+                if (targetRole == RoleType.Admin.ToName())
+                    return false;
+
+                if (targetUser.isLocked)
+                {
+                    await _userRepository.SetLockoutEndDateAsync(targetUser, null);
+                    await _userRepository.ResetAccessFailedCountAsync(targetUser);
+                }
+                else
+                {
+                    await _userRepository.SetLockoutEndDateAsync(targetUser, DateTimeOffset.UtcNow.AddYears(100));
+                }
+
+                return true;
+            }
+
+            return false;
         }
     }
 }
