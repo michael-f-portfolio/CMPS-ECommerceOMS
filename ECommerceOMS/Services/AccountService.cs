@@ -63,59 +63,6 @@ namespace ECommerceOMS.Services
             return true;
         }
 
-        public async Task<string?> GetRoleAsync(string email)
-        {
-            var user = await _userRepository.FindByEmailAsync(email);
-            if (user == null) return null;
-
-            var role = await _userRepository.GetRoleAsync(user);
-            if (role == null) return null;
-
-            return role;
-        }
-
-        public async Task<bool> AssignRoleAsync(string actingUserEmail, string targetEmail, RoleType newRole)
-        {
-            var actingUser = await _userRepository.FindByEmailAsync(actingUserEmail);
-            if (actingUser == null) return false;
-
-            var actingRole = await _userRepository.GetRoleAsync(actingUser);
-            if (actingRole == null)
-                return false;
-
-            var targetUser = await _userRepository.FindByEmailAsync(targetEmail);
-            if (targetUser == null) 
-                return false;
-
-            var targetUserCurrentRole = await _userRepository.GetRoleAsync(targetUser);
-
-            // Has SuperAdmin Role - Can modify any role
-            if (actingRole == RoleType.SuperAdmin.ToName())
-            {
-                if (targetUserCurrentRole != null)
-                    await _userRepository.RemoveFromRoleAsync(targetUser, targetUserCurrentRole);
-
-                return await _userRepository.AddToRoleAsync(targetUser, newRole.ToName());
-            }
-
-            // Has Admin Role - Can modify Buyer and Seller roles only
-            if (actingRole == RoleType.Admin.ToName())
-            {
-                if (targetUserCurrentRole == RoleType.SuperAdmin.ToName() ||
-                    targetUserCurrentRole == RoleType.Admin.ToName())
-                    return false;
-
-                if (targetUserCurrentRole == RoleType.Seller.ToName() ||
-                    targetUserCurrentRole == RoleType.Buyer.ToName())
-                    await _userRepository.RemoveFromRoleAsync(targetUser, targetUserCurrentRole);
-
-                return await _userRepository.AddToRoleAsync(targetUser, newRole.ToName());
-            }
-
-            // Has Seller/Buyer Role - Cannot modify any roles
-            return false;
-        }
-
         public Task LogoutAsync() => _signInManager.SignOutAsync();
     }
 }

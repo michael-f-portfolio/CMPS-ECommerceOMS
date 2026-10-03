@@ -33,6 +33,9 @@ namespace ECommerceOMS.Repositories
             return roles.FirstOrDefault();
         }
 
-        
+        public Task<List<ApplicationUser>> GetAllUsersAsync()
+        {
+            return Task.FromResult(_userManager.Users.ToList());
+        }
     }
 }

@@ -15,6 +15,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 // DI
 // Services
 builder.Services.AddScoped<AccountService>();
+builder.Services.AddScoped<UserService>();
+builder.Services.AddScoped<AdminService>();
 
 // Repositories
 builder.Services.AddScoped<UserRepository>();
