@@ -2,6 +2,7 @@
 using ECommerceOMS.Repositories;
 using ECommerceOMS.ViewModels.Account;
 using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 
 namespace ECommerceOMS.Services
 {
@@ -19,12 +20,24 @@ namespace ECommerceOMS.Services
 
         public async Task<bool> LoginAsync(LoginViewModel model)
         {
-            var result = await _signInManager.PasswordSignInAsync(
-                model.Email,
+            var user = await _userRepository.FindByEmailAsync(model.Email);
+            if (user == null)
+                return false;
+
+            var result = await _signInManager.CheckPasswordSignInAsync(
+                user,
                 model.Password,
-                false,
-                false
-                );
+                lockoutOnFailure: false);
+
+            if (!result.Succeeded)
+                return false;
+
+            var claims = new List<Claim>
+            {
+                new Claim("DisplayName", user.DisplayName ?? user.UserName)
+            };
+
+            await _signInManager.SignInWithClaimsAsync(user, isPersistent: false, claims);
 
             return result.Succeeded;
         }

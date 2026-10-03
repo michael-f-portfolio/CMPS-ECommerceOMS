@@ -6,19 +6,7 @@
     </head>
     <body>
         <header>
-        <nav>
-            <a asp-controller="Home" asp-action="Index">Home</a>
-            @if (User.Identity.IsAuthenticated)
-            {
-                 <a asp-controller="Account" asp-action="Logout">Logout</a>   
-            }
-            else
-            {
-                <a asp-controller="Account" asp-action="Login">Login</a>
-                <a asp-controller="Account" asp-action="Register">Register</a>
-            }
-
-        </nav>
+        @await Html.PartialAsync("_Nav")
         </header>
 
         <main>

@@ -1,0 +1,45 @@
+﻿@using System.Security.Claims
+@using ECommerceOMS.Models.Identity
+
+<nav>
+    <a asp-controller="Products" asp-action="Index">Products</a>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        var displayName = User.FindFirst("DisplayName")?.Value ?? User.Identity.Name;
+        var role = User.FindFirst(ClaimTypes.Role)?.Value;
+
+        <span>Hello, @displayName</span>
+
+        if (role == RoleType.Buyer.ToName())
+        {
+            <a asp-controller="Cart" asp-action="Index">My Cart</a>
+            <a asp-controller="Orders" asp-action="Index">My Orders</a>
+        }
+
+        if (role == RoleType.Seller.ToName())
+        {
+            <a asp-controller="SellerProducts" asp-action="Index">My Products</a> 
+        }
+
+        if (role == RoleType.Admin.ToName() || role == RoleType.SuperAdmin.ToName())
+        {
+            <a asp-controller="AdminProducts" asp-action="Index">All Products</a>
+            <a asp-controller="AdminCarts" asp-action="Index">All Carts</a>
+            <a asp-controller="AdminOrders" asp-action="Index">All Orders</a>
+            <a asp-controller="UserManagement" asp-action="Index">Manage Users</a>
+        }
+
+        if (role == RoleType.SuperAdmin.ToName())
+        {
+            <a asp-controller="AdminManagement" asp-action="Index">Manage Admins</a>
+        }
+
+        <a asp-controller="Account" asp-action="Logout">Logout</a>
+    }
+    else
+    {
+        <a asp-controller="Account" asp-action="Login">Login</a>
+        <a asp-controller="Account" asp-action="Register">Register</a>
+    }
+</nav>

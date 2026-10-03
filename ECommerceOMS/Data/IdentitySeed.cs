@@ -62,6 +62,24 @@ namespace ECommerceOMS.Data
                 await userManager.AddToRoleAsync(adminUser, RoleType.Admin.ToName());
             }
 
+            // Add Seller User
+            var sellerEmail = "seller@test.com";
+            var sellerUser = await userManager.FindByNameAsync(sellerEmail);
+
+            if (sellerUser == null)
+            {
+                sellerUser = new ApplicationUser
+                {
+                    UserName = sellerEmail,
+                    Email = sellerEmail,
+                    EmailConfirmed = true,
+                    DisplayName = "Test Seller"
+                };
+
+                await userManager.CreateAsync(sellerUser, "Seller123!");
+                await userManager.AddToRoleAsync(sellerUser, RoleType.Seller.ToName());
+            }
+
             // Add Buyer User
             var buyerEmail = "buyer@test.com";
             var buyerUser = await userManager.FindByNameAsync(buyerEmail);
@@ -80,23 +98,7 @@ namespace ECommerceOMS.Data
                 await userManager.AddToRoleAsync(buyerUser, RoleType.Buyer.ToName());
             }
 
-            // Add Seller User
-            var sellerEmail = "seller@test.com";
-            var sellerUser = await userManager.FindByNameAsync(sellerEmail);
-
-            if (sellerUser == null)
-            {
-                sellerUser = new ApplicationUser
-                {
-                    UserName = sellerEmail,
-                    Email = sellerEmail,
-                    EmailConfirmed = true,
-                    DisplayName = "Test Seller"
-                };
-
-                await userManager.CreateAsync(sellerUser, "Seller123!");
-                await userManager.AddToRoleAsync(sellerUser, RoleType.Seller.ToName());
-            }
+           
         }
     }
 }
