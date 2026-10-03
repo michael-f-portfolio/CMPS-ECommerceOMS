@@ -39,6 +39,11 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole(RoleType.Buyer.ToName()));
 });
 
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.AccessDeniedPath = "/AccessDenied";
+});
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
