@@ -1,4 +1,5 @@
-﻿using ECommerceOMS.Models.Identity;
+﻿using System.Security.Claims;
+using ECommerceOMS.Models.Identity;
 using Microsoft.AspNetCore.Identity;
 
 namespace ECommerceOMS.Repositories
@@ -33,15 +34,16 @@ namespace ECommerceOMS.Repositories
             return roles.FirstOrDefault();
         }
 
-        public Task<List<ApplicationUser>> GetAllUsersAsync()
-        {
-            return Task.FromResult(_userManager.Users.ToList());
-        }
+        public Task<List<ApplicationUser>> GetAllUsersAsync() 
+            => Task.FromResult(_userManager.Users.ToList());
 
         public Task SetLockoutEndDateAsync(ApplicationUser user, DateTimeOffset? lockoutEnd)
             => _userManager.SetLockoutEndDateAsync(user, lockoutEnd);
 
         public Task ResetAccessFailedCountAsync(ApplicationUser user)
             => _userManager.ResetAccessFailedCountAsync(user);
+
+        public async Task<ApplicationUser?> GetUserAsync(ClaimsPrincipal principal) 
+            => await _userManager.GetUserAsync(principal);
     }
 }

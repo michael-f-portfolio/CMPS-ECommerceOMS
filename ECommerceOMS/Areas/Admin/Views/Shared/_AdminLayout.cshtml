@@ -9,8 +9,9 @@
             @Html.Partial("_AdminNav")
         </header>
 
-        <main>
-            @RenderBody()
-        </main>
+    <main>
+        @RenderBody()
+    </main>
+        @RenderSection("Scripts", required: false)
     </body>
 </html>

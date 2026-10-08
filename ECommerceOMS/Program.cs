@@ -17,9 +17,11 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddScoped<AccountService>();
 builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<AdminService>();
+builder.Services.AddScoped<ProductService>();
 
 // Repositories
 builder.Services.AddScoped<UserRepository>();
+builder.Services.AddScoped<ProductRepository>();
 
 // Identity Setup
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
