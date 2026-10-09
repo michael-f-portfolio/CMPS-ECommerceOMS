@@ -1,4 +1,5 @@
-﻿using ECommerceOMS.Models.Identity;
+﻿using System.Security.Claims;
+using ECommerceOMS.Models.Identity;
 using ECommerceOMS.Repositories;
 
 namespace ECommerceOMS.Services
@@ -29,5 +30,10 @@ namespace ECommerceOMS.Services
 
         public Task<List<ApplicationUser>> GetAllUsersAsync()
                 => _userRepository.GetAllUsersAsync();
+
+        public async Task<ApplicationUser> GetCurrentUserAsync(ClaimsPrincipal principal)
+        {
+            return await _userRepository.GetUserAsync(principal);
+        }
     }
 }

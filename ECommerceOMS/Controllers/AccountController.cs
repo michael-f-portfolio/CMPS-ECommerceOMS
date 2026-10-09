@@ -55,13 +55,11 @@ namespace ECommerceOMS.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (!await _accountService.RegisterAsync(model))
-            {
-                ModelState.AddModelError("", "Registration Failed");
-                return View(model);
-            }
-
-            return RedirectToAction("Index", "Buyer");
+            if (await _accountService.RegisterAsync(model)) 
+                return RedirectToAction("Index", "Buyer");
+            
+            ModelState.AddModelError("", "Registration Failed");
+            return View(model);
         }
 
         public async Task<IActionResult> Logout()

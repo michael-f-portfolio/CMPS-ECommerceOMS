@@ -18,7 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
+    <Content Include="SeedImages\Products\**\*">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
+
 
 </Project>
