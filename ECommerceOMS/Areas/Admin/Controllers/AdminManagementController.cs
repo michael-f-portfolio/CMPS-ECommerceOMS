@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ECommerceOMS.Areas.Admin.Controllers
 {
     [Authorize(Roles = "SuperAdmin")]
+    [Route("admin/admins")]
     public class AdminManagementController : AdminBaseController
     {
         private readonly UserService _userService;

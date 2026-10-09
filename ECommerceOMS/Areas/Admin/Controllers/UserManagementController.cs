@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceOMS.Areas.Admin.Controllers
 {
+    [Route("admin/users")]
     public class UserManagementController : AdminBaseController
     {
         private readonly UserService _userService;
@@ -15,6 +16,7 @@ namespace ECommerceOMS.Areas.Admin.Controllers
             _adminService = adminService;
         }
 
+        [HttpGet("")]
         public async Task<IActionResult> Index()
         {
             var users = await _userService.GetAllUsersAsync();

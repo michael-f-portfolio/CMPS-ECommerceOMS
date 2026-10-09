@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 namespace ECommerceOMS.Areas.Admin.Controllers
 {
     [Route("admin/products")]
-    public class AdminProductsController : AdminBaseController
+    public class ProductManagementController : AdminBaseController
     {
         private readonly ProductService _productService;
 
-        public AdminProductsController(ProductService productService)
+        public ProductManagementController(ProductService productService)
         {
             _productService = productService;
         }

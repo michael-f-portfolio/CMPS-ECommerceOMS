@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceOMS.Areas.Admin.Controllers
 {
+    [Route("admin/carts")]
     public class CartManagementController : AdminBaseController
     {
         private readonly CartService _cartService;
@@ -12,6 +13,7 @@ namespace ECommerceOMS.Areas.Admin.Controllers
             _cartService = cartService;
         }
         
+        [HttpGet("")]
         public async Task<IActionResult> Index()
         {
             var carts = await _cartService.GetAllCartsForAdminAsync();

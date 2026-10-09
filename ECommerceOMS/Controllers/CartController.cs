@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ECommerceOMS.Controllers;
 
 [Authorize(Roles = "Buyer")]
+[Route("cart")]
 public class CartController : Controller
 {
     private readonly CartService _cartService;
@@ -18,7 +19,7 @@ public class CartController : Controller
     private string GetBuyerId() =>
         User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-    [HttpGet]
+    [HttpGet("")]
     public async Task<IActionResult> Index()
     {
         var cart = await _cartService.GetOrCreateCartAsync(GetBuyerId());
@@ -31,21 +32,21 @@ public class CartController : Controller
         return View(cart);
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public async Task<IActionResult> Add(int productId, int quantity = 1)
     {
         await _cartService.AddItemAsync(GetBuyerId(), productId, quantity);
         return RedirectToAction(nameof(Index));
     }
 
-    [HttpPost]
+    [HttpPost("update")]
     public async Task<IActionResult> Update(int itemId, int quantity)
     {
         await _cartService.UpdateItemAsync(GetBuyerId(),  itemId, quantity);
         return RedirectToAction(nameof(Index));
     }
 
-    [HttpPost]
+    [HttpPost("remove")]
     public async Task<IActionResult> Remove(int itemId, int quantity)
     {
         await _cartService.RemoveItemAsync(GetBuyerId(), itemId);

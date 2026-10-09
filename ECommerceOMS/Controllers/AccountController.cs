@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace ECommerceOMS.Controllers
 {
     [AllowAnonymous]
+    [Route("account")]
     public class AccountController : Controller
     {
         private readonly AccountService _accountService;
@@ -18,13 +19,13 @@ namespace ECommerceOMS.Controllers
             _userService = userService;
         }
 
-        [HttpGet]
+        [HttpGet("login")]
         public IActionResult Login()  
             => User.Identity.IsAuthenticated ? RedirectToAction("Index", "Home") 
                                              : View();
         
 
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (User.Identity.IsAuthenticated)
@@ -47,12 +48,12 @@ namespace ECommerceOMS.Controllers
             };
         }
 
-        [HttpGet]
+        [HttpGet("register")]
         public IActionResult Register() => 
             User.Identity.IsAuthenticated ? RedirectToAction("Index", "Home") 
                                           : View();
 
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (await _accountService.RegisterAsync(model)) 
@@ -62,6 +63,7 @@ namespace ECommerceOMS.Controllers
             return View(model);
         }
 
+        [HttpGet("logout")]
         public async Task<IActionResult> Logout()
         {
             await _accountService.LogoutAsync();
