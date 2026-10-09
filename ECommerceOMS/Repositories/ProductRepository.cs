@@ -13,17 +13,21 @@ namespace ECommerceOMS.Repositories
             _dbContext = dbContext;
         }
 
-        public Task<List<Product>> GetAllAsync()
-            => _dbContext.Products.Include(p => p.Seller).ToListAsync();
+        public Task<List<Product>> GetAllAsync() => 
+            _dbContext.Products.Include(p => p.Seller).ToListAsync();
+        
+        public Task<Product?> GetByIdAsync(int id) => 
+            _dbContext.Products.Include(p => p.Seller).FirstOrDefaultAsync(p => p.Id == id);
 
-        public Task<Product?> GetByIdAsync(int id)
-            => _dbContext.Products.Include(p => p.Seller).FirstOrDefaultAsync(p => p.Id == id);
+        public async Task<List<Product>> GetProductsBySellerIdAsync(string sellerId) => 
+            await _dbContext.Products.Where(p => p.SellerId == sellerId).ToListAsync();
 
-        public async Task<List<Product>> GetProductsBySellerIdAsync(string sellerId)
-        {
-            return await _dbContext.Products.Where(p => p.SellerId == sellerId).ToListAsync();
-        }
-
+        public async Task<List<Product>> GetAllActiveAsync() =>
+            await _dbContext.Products
+                .Where(p => p.IsActive)
+                .Include(p => p.Seller)
+                .ToListAsync();
+        
         public async Task AddAsync(Product product)
         {
             _dbContext.Products.Add(product);

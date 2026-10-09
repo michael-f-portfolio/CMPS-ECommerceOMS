@@ -57,11 +57,17 @@ namespace ECommerceOMS.Services
             }
         }
         
-        public Task<List<Product>> GetAllAsync() 
-            => _productRepository.GetAllAsync();
+        public Task<List<Product>> GetAllAsync() => 
+            _productRepository.GetAllAsync();
 
-        public Task<Product?> GetByIdAsync(int id)
-            => _productRepository.GetByIdAsync(id);
+        public Task<Product?> GetByIdAsync(int id) => 
+            _productRepository.GetByIdAsync(id);
+
+        public Task<List<Product>> GetProductsBySellerIdAsync(string sellerId) => 
+            _productRepository.GetProductsBySellerIdAsync(sellerId);
+
+        public Task<List<Product>> GetAllActiveAsync() => 
+            _productRepository.GetAllActiveAsync();
 
         public async Task AddAsync(Product product, IFormFile? imageFile, ClaimsPrincipal? claimsPrincipal)
         {
@@ -157,11 +163,6 @@ namespace ECommerceOMS.Services
             }
             
             await _productRepository.DeleteAsync(productToDelete);
-        }
-
-        public Task<List<Product>> GetProductsBySellerIdAsync(string sellerId)
-        {
-            return _productRepository.GetProductsBySellerIdAsync(sellerId);
         }
     }
 }
