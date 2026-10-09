@@ -22,6 +22,12 @@ public class CartController : Controller
     public async Task<IActionResult> Index()
     {
         var cart = await _cartService.GetOrCreateCartAsync(GetBuyerId());
+
+        if (_cartService.CartWasAdjusted)
+        {
+            TempData["CartWasAdjusted"] = "Some items were updated due to inventory changes";
+        }
+        
         return View(cart);
     }
 

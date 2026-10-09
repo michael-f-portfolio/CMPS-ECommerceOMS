@@ -69,15 +69,12 @@ namespace ECommerceOMS.Services
         public Task<List<Product>> GetAllActiveAsync() => 
             _productRepository.GetAllActiveAsync();
 
-        public async Task AddAsync(Product product, IFormFile? imageFile, ClaimsPrincipal? claimsPrincipal)
+        public async Task AddAsync(Product product, ClaimsPrincipal claimsPrincipal)
         {
             if (claimsPrincipal == null)
                 throw new UnauthorizedAccessException("You don't have permission to add products.");
  
             var currentUser = await _userService.GetCurrentUserAsync(claimsPrincipal);
- 
-            // Assign this new product to the current user
-            product.SellerId = currentUser.Id;
             
             try
             {
@@ -86,13 +83,6 @@ namespace ECommerceOMS.Services
             catch (UnauthorizedAccessException exception)
             {
                 throw new UnauthorizedAccessException(exception.Message);
-            }
-            
-            if (imageFile is { Length: > 0 })
-            {
-                using var ms = new MemoryStream();
-                await imageFile.CopyToAsync(ms);
-                product.ImageData = ms.ToArray();
             }
             
             await _productRepository.AddAsync(product);

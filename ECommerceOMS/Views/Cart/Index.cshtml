@@ -6,6 +6,13 @@
 
 <h2>Your Cart</h2>
 
+@if (TempData["CartWasAdjusted"] != null)
+{
+    <div>
+        @TempData["CartWasAdjusted"]
+    </div>
+}
+
 @if (Model == null || !Model.Items.Any())
 {
     <p>Your cart is empty.</p>
@@ -33,7 +40,10 @@ else
                 <td>
                     <form asp-action="Update" method="post">
                         <input type="hidden" name="itemId" value="@item.Id"/>
-                        <input type="number" name="quantity" value="@item.Quantity" min="0"/>
+                        <input type="number" name="quantity" 
+                               value="@item.Quantity" 
+                               min="1" 
+                               max="@item.Product.QuantityOnHand"/>
                         <button type="submit">Update</button>
                     </form>
                 </td>
