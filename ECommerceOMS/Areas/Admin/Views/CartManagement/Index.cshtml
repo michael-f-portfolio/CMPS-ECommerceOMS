@@ -1,0 +1,40 @@
+﻿@model List<ECommerceOMS.ViewModels.AdminCartEditViewModel>
+
+@{
+    ViewData["Title"] = "Cart Management";
+    Layout = "/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Cart Management</h2>
+
+@if (TempData["Message"] != null)
+{
+    <div>@TempData["Message"]</div>
+}
+
+<table>
+    <thead>
+    <tr>
+        <th>Buyer</th>
+        <th>Items</th>
+        <th>Total Value</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var cart in Model)
+    {
+        <tr>
+            <td>@cart.BuyerDisplayName</td>
+            <td>@cart.ItemCount</td>
+            <td>@cart.TotalValue.ToString("C")</td>
+            <td>
+                <form asp-action="Clear" method="post">
+                    <input type="hidden" name="cartId" value="@cart.CartId"/>
+                    <button>Clear Cart</button>
+                </form>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -1,5 +1,6 @@
 ﻿using ECommerceOMS.Models;
 using ECommerceOMS.Repositories;
+using ECommerceOMS.ViewModels;
 
 namespace ECommerceOMS.Services;
 
@@ -60,6 +61,20 @@ public class CartService
         }
 
         return cart;
+    }
+    
+    public async Task<List<AdminCartEditViewModel>> GetAllCartsForAdminAsync()
+    {
+        var carts = await _cartRepository.GetAllAsync();
+
+        return carts.Select(c => new AdminCartEditViewModel
+        {
+            CartId = c.Id,
+            BuyerId = c.BuyerId,
+            BuyerDisplayName =  c.Buyer?.DisplayName,
+            ItemCount = c.Items.Count,
+            TotalValue = c.Items.Sum(i => i.PriceAtAdd * i.Quantity)
+        }).ToList();
     }
 
     public async Task<Cart> AddItemAsync(string buyerId, int productId, int quantity)
@@ -132,4 +147,11 @@ public class CartService
         await _cartRepository.SaveChangesAsync();
         return cart;
     }
+
+    public async Task ClearCartAsync(int cartId)
+    {
+        await _cartRepository.ClearCartAsync(cartId);
+    }
+
+
 }

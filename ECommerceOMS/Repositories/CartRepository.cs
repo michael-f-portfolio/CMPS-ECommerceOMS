@@ -13,14 +13,19 @@ public class CartRepository
         _dbContext = dbContext;
     }
 
-    public async Task<Cart?> GetByBuyerIdAsync(string buyerId)
-    {
-        return await _dbContext.Carts
+    public async Task<List<Cart>> GetAllAsync() =>
+        await _dbContext.Carts
+            .Include(c => c.Buyer)
+            .Include(c => c.Items)
+            .ThenInclude(i => i.Product)
+            .ToListAsync();
+
+    public async Task<Cart?> GetByBuyerIdAsync(string buyerId) =>
+        await _dbContext.Carts
             .Include(c => c.Items)
             .ThenInclude(i => i.Product)
             .ThenInclude(p => p.Seller)
             .FirstOrDefaultAsync(c => c.BuyerId == buyerId);
-    }
 
     public async Task<Cart> CreateAsync(string buyerId)
     {
@@ -36,9 +41,19 @@ public class CartRepository
         return cart;
     }
     
-    public async Task SaveChangesAsync()
+    public async Task ClearCartAsync(int cartId)
     {
+        var cart = await _dbContext.Carts
+            .Include(c => c.Items)
+            .FirstOrDefaultAsync(c => c.Id == cartId);
+
+        if (cart == null)
+            return;
+        
+        cart.Items.Clear();
         await _dbContext.SaveChangesAsync();
     }
     
+    public async Task SaveChangesAsync() => 
+        await _dbContext.SaveChangesAsync();
 }
