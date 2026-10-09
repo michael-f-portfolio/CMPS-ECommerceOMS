@@ -88,6 +88,110 @@ namespace ECommerceOMS.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "10000000-0000-0000-0000-000000000001",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70000000-0000-0000-0000-000000000001",
+                            DisplayName = "Test Super Admin",
+                            Email = "superadmin@test.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SUPERADMIN@TEST.COM",
+                            NormalizedUserName = "SUPERADMIN@TEST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEOVoN5jpbRkKNaBQCPfpqaB6VBH8EmlnqrgDZ6jozuPouLV6EaHYGxUn46gf3GktYQ==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "50000000-0000-0000-0000-000000000001",
+                            TwoFactorEnabled = false,
+                            UserName = "superadmin@test.com"
+                        },
+                        new
+                        {
+                            Id = "10000000-0000-0000-0000-000000000002",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70000000-0000-0000-0000-000000000002",
+                            DisplayName = "Test Administrator",
+                            Email = "admin@test.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "ADMIN@TEST.COM",
+                            NormalizedUserName = "ADMIN@TEST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAENhdpnO5oUWM+s882qifac7x5CvslMHa5SWHWfUGR/cz238vsoG7brjZ5saQLEORqg==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "50000000-0000-0000-0000-000000000002",
+                            TwoFactorEnabled = false,
+                            UserName = "admin@test.com"
+                        },
+                        new
+                        {
+                            Id = "10000000-0000-0000-0000-000000000003",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70000000-0000-0000-0000-000000000003",
+                            DisplayName = "Test Buyer",
+                            Email = "buyer@test.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "BUYER@TEST.COM",
+                            NormalizedUserName = "BUYER@TEST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJ5A6iOUDcwdwHZQqBhl7ZnuJ4s8nMKvrM4JcwOJgrQ4Mmqkcw9s6tRzDymHNh+y8w==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "50000000-0000-0000-0000-000000000003",
+                            TwoFactorEnabled = false,
+                            UserName = "buyer@test.com"
+                        },
+                        new
+                        {
+                            Id = "11111111-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70000000-0000-0000-0000-000000000004",
+                            DisplayName = "Test Seller 1",
+                            Email = "seller1@test.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SELLER1@TEST.COM",
+                            NormalizedUserName = "SELLER1@TEST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "50000000-0000-0000-0000-000000000004",
+                            TwoFactorEnabled = false,
+                            UserName = "seller1@test.com"
+                        },
+                        new
+                        {
+                            Id = "22222222-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70000000-0000-0000-0000-000000000005",
+                            DisplayName = "Test Seller 2",
+                            Email = "seller2@test.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SELLER2@TEST.COM",
+                            NormalizedUserName = "SELLER2@TEST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "50000000-0000-0000-0000-000000000005",
+                            TwoFactorEnabled = false,
+                            UserName = "seller2@test.com"
+                        },
+                        new
+                        {
+                            Id = "33333333-cccc-cccc-cccc-cccccccccccc",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "70000000-0000-0000-0000-000000000006",
+                            DisplayName = "Test Seller 3",
+                            Email = "seller3@test.com",
+                            EmailConfirmed = true,
+                            LockoutEnabled = false,
+                            NormalizedEmail = "SELLER3@TEST.COM",
+                            NormalizedUserName = "SELLER3@TEST.COM",
+                            PasswordHash = "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "50000000-0000-0000-0000-000000000006",
+                            TwoFactorEnabled = false,
+                            UserName = "seller3@test.com"
+                        });
                 });
 
             modelBuilder.Entity("ECommerceOMS.Models.Product", b =>
@@ -128,6 +232,128 @@ namespace ECommerceOMS.Migrations
                     b.HasIndex("SellerId");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "RGB backlit mechanical keyboard with tactile switches.",
+                            IsActive = true,
+                            Name = "Mechanical Keyboard",
+                            Price = 129.99m,
+                            QuantityOnHand = 25,
+                            SellerId = "11111111-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "High‑precision wireless gaming mouse with adjustable DPI.",
+                            IsActive = true,
+                            Name = "Wireless Gaming Mouse",
+                            Price = 89.99m,
+                            QuantityOnHand = 40,
+                            SellerId = "11111111-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Description = "Full HD webcam with autofocus and dual microphones.",
+                            IsActive = true,
+                            Name = "Webcam 1080p",
+                            Price = 59.99m,
+                            QuantityOnHand = 50,
+                            SellerId = "11111111-aaaa-aaaa-aaaa-aaaaaaaaaaaa"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Description = "IPS gaming monitor with 144Hz refresh rate and 1ms response time.",
+                            IsActive = true,
+                            Name = "27\" 144Hz Monitor",
+                            Price = 299.99m,
+                            QuantityOnHand = 15,
+                            SellerId = "22222222-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Description = "High‑performance graphics card for gaming and content creation.",
+                            IsActive = true,
+                            Name = "NVIDIA RTX 4070 GPU",
+                            Price = 699.99m,
+                            QuantityOnHand = 10,
+                            SellerId = "22222222-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Description = "Multi‑port docking station with HDMI, USB‑A, USB‑C, and Ethernet.",
+                            IsActive = true,
+                            Name = "USB‑C Docking Station",
+                            Price = 119.99m,
+                            QuantityOnHand = 30,
+                            SellerId = "22222222-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Description = "Comfortable over‑ear headset with active noise cancellation.",
+                            IsActive = true,
+                            Name = "Noise‑Cancelling Headset",
+                            Price = 159.99m,
+                            QuantityOnHand = 18,
+                            SellerId = "22222222-bbbb-bbbb-bbbb-bbbbbbbbbbbb"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Description = "8‑core processor optimized for gaming performance.",
+                            IsActive = true,
+                            Name = "AMD Ryzen 7 7800X3D CPU",
+                            Price = 449.99m,
+                            QuantityOnHand = 20,
+                            SellerId = "33333333-cccc-cccc-cccc-cccccccccccc"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Description = "High‑speed portable SSD with USB‑C connectivity.",
+                            IsActive = true,
+                            Name = "External SSD 1TB",
+                            Price = 149.99m,
+                            QuantityOnHand = 35,
+                            SellerId = "33333333-cccc-cccc-cccc-cccccccccccc"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Description = "Tempered glass mid‑tower case with RGB fans included.",
+                            IsActive = true,
+                            Name = "PC Case RGB Mid‑Tower",
+                            Price = 99.99m,
+                            QuantityOnHand = 22,
+                            SellerId = "33333333-cccc-cccc-cccc-cccccccccccc"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Description = "80+ Gold certified fully modular PSU.",
+                            IsActive = true,
+                            Name = "650W Modular Power Supply",
+                            Price = 119.99m,
+                            QuantityOnHand = 28,
+                            SellerId = "33333333-cccc-cccc-cccc-cccccccccccc"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Description = "Ergonomic gaming chair with adjustable lumbar support.",
+                            IsActive = true,
+                            Name = "Gaming Chair",
+                            Price = 199.99m,
+                            QuantityOnHand = 12,
+                            SellerId = "33333333-cccc-cccc-cccc-cccccccccccc"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -155,6 +381,36 @@ namespace ECommerceOMS.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "00000000-0000-0000-0000-000000000001",
+                            ConcurrencyStamp = "60000000-0000-0000-0000-000000000001",
+                            Name = "SuperAdmin",
+                            NormalizedName = "SUPERADMIN"
+                        },
+                        new
+                        {
+                            Id = "00000000-0000-0000-0000-000000000002",
+                            ConcurrencyStamp = "60000000-0000-0000-0000-000000000002",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "00000000-0000-0000-0000-000000000003",
+                            ConcurrencyStamp = "60000000-0000-0000-0000-000000000003",
+                            Name = "Seller",
+                            NormalizedName = "SELLER"
+                        },
+                        new
+                        {
+                            Id = "00000000-0000-0000-0000-000000000004",
+                            ConcurrencyStamp = "60000000-0000-0000-0000-000000000004",
+                            Name = "Buyer",
+                            NormalizedName = "BUYER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -242,6 +498,38 @@ namespace ECommerceOMS.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetUserRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            UserId = "10000000-0000-0000-0000-000000000001",
+                            RoleId = "00000000-0000-0000-0000-000000000001"
+                        },
+                        new
+                        {
+                            UserId = "10000000-0000-0000-0000-000000000002",
+                            RoleId = "00000000-0000-0000-0000-000000000002"
+                        },
+                        new
+                        {
+                            UserId = "11111111-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+                            RoleId = "00000000-0000-0000-0000-000000000003"
+                        },
+                        new
+                        {
+                            UserId = "22222222-bbbb-bbbb-bbbb-bbbbbbbbbbbb",
+                            RoleId = "00000000-0000-0000-0000-000000000003"
+                        },
+                        new
+                        {
+                            UserId = "33333333-cccc-cccc-cccc-cccccccccccc",
+                            RoleId = "00000000-0000-0000-0000-000000000003"
+                        },
+                        new
+                        {
+                            UserId = "10000000-0000-0000-0000-000000000003",
+                            RoleId = "00000000-0000-0000-0000-000000000004"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>

@@ -51,12 +51,6 @@ builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
-// Seed Users
-using (var scope = app.Services.CreateScope())
-{
-    await IdentitySeed.SeedAsync(scope.ServiceProvider);
-}
-
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
