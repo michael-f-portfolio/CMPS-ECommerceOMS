@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using ECommerceOMS.Models;
 using ECommerceOMS.Services;
+using ECommerceOMS.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,12 +35,25 @@ public class SellerController : Controller
     public IActionResult Create() => View();
 
     [HttpPost("create")]
-    public async Task<IActionResult> Create(Product product, IFormFile? imageFile)
+    public async Task<IActionResult> Create(ProductCreateViewModel viewModel)
     {
         if (!ModelState.IsValid)
-            return View(product);
+            return View(viewModel);
         
-        await _productService.AddAsync(product, imageFile, User);
+        using var ms = new MemoryStream();
+        await viewModel.ImageFile.CopyToAsync(ms);
+
+        var product = new Product
+        {
+            Name = viewModel.Name,
+            Description = viewModel.Description,
+            Price = viewModel.Price,
+            QuantityOnHand = viewModel.QuantityOnHand,
+            ImageData =  ms.ToArray(),
+            SellerId = GetSellerId()
+        };
+        
+        await _productService.AddAsync(product, User);
         
         return RedirectToAction(nameof(Index));
     }
