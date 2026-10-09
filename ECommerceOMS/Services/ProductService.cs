@@ -88,7 +88,7 @@ namespace ECommerceOMS.Services
             await _productRepository.AddAsync(product);
         }
 
-        public async Task UpdateAsync(Product updatedProduct, IFormFile? imageFile, ClaimsPrincipal? claimsPrincipal)
+        public async Task UpdateAsync(Product updatedProduct, ClaimsPrincipal? claimsPrincipal)
         {
             var existingProduct = await _productRepository.GetByIdAsync(updatedProduct.Id);
 
@@ -109,12 +109,12 @@ namespace ECommerceOMS.Services
                 throw new UnauthorizedAccessException(exception.Message);
             }
             
-            if (imageFile is { Length: > 0 })
+            /*if (imageFile is { Length: > 0 })
             {
                 using var ms = new MemoryStream();
                 await imageFile.CopyToAsync(ms);
                 updatedProduct.ImageData = ms.ToArray();
-            }
+            }*/
             
             existingProduct.Name = updatedProduct.Name;
             existingProduct.Description =  updatedProduct.Description;

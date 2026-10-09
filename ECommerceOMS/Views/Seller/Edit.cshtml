@@ -1,4 +1,4 @@
-﻿@model Product
+﻿@model ECommerceOMS.ViewModels.ProductEditViewModel
 
 @{
     ViewData["Title"] = "Edit Product";
@@ -40,9 +40,9 @@
     
     <div>
         <label>Current Image</label> <br/>
-        @if (Model.ImageData != null)
+        @if (Model.ExistingImageBase64 != null)
         {
-            <img src="data:image/png;base64, @Convert.ToBase64String(Model.ImageData)" 
+            <img src="data:image/png;base64, @Model.ExistingImageBase64" 
                  style="width:60px;height:60px;object-fit: cover; border-radius: 4px" 
                  alt="@Model.Name"/>
         }
