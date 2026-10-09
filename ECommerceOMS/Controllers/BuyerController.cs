@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceOMS.Controllers
 {
-    [Authorize(Roles = "SuperAdmin, Admin, Buyer")]
+    [Authorize(Roles = "Buyer")]
     public class BuyerController : Controller
     {
         public IActionResult Index()
