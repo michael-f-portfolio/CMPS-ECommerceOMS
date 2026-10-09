@@ -1,15 +1,16 @@
 ﻿using ECommerceOMS.Models;
 using ECommerceOMS.Services;
+using ECommerceOMS.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceOMS.Areas.Admin.Controllers
 {
     [Route("admin/products")]
-    public class AdminProductsController : AdminBaseController
+    public class ProductManagementController : AdminBaseController
     {
         private readonly ProductService _productService;
 
-        public AdminProductsController(ProductService productService)
+        public ProductManagementController(ProductService productService)
         {
             _productService = productService;
         }
@@ -28,16 +29,47 @@ namespace ECommerceOMS.Areas.Admin.Controllers
             if (product == null)
                 return RedirectToAction(nameof(Index));
 
-            return View(product);
+            var editViewModel = new ProductEditViewModel
+            {
+                Id = product.Id,
+                Name = product.Name,
+                Description = product.Description,
+                Price = product.Price,
+                QuantityOnHand = product.QuantityOnHand,
+                IsActive = product.IsActive,
+                ExistingImageBase64 = product.ImageData != null
+                    ? Convert.ToBase64String(product.ImageData)
+                    : null
+            };
+            
+            return View(editViewModel);
         }
 
         [HttpPost("edit/{id}")]
-        public async Task<IActionResult> Edit(Product product, IFormFile? imageFile)
+        public async Task<IActionResult> Edit(ProductEditViewModel editViewModel)
         {
             if (!ModelState.IsValid)
-                return View(product);
+                return View(editViewModel);
             
-            await _productService.UpdateAsync(product, imageFile, User);
+            var product = await _productService.GetByIdAsync(editViewModel.Id);
+            if (product == null) 
+                return RedirectToAction(nameof(Index));
+            
+            product.Name = editViewModel.Name;
+            product.Description = editViewModel.Description;
+            product.Price = editViewModel.Price;
+            product.QuantityOnHand = editViewModel.QuantityOnHand;
+            product.IsActive = editViewModel.IsActive;
+
+            if (editViewModel.ImageFile != null)
+            {
+                using var ms =  new MemoryStream();
+                await editViewModel.ImageFile.CopyToAsync(ms);
+                product.ImageData = ms.ToArray();
+            }
+            
+            
+            await _productService.UpdateAsync(product, User);
             return RedirectToAction(nameof(Index));
         }
 
@@ -66,7 +98,7 @@ namespace ECommerceOMS.Areas.Admin.Controllers
                 return RedirectToAction(nameof(Index));
             
             product.IsActive = !product.IsActive;
-            await _productService.UpdateAsync(product,null, User);
+            await _productService.UpdateAsync(product, User);
 
             return RedirectToAction(nameof(Index));
         }

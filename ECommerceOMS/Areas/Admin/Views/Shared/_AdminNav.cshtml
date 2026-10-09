@@ -4,16 +4,16 @@
 <nav>
     <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
     <a asp-area="Admin" asp-controller="Home" asp-action="Index">Admin Dashboard</a>
-    <a asp-area="Admin" asp-controller="AdminProducts" asp-action="Index">Products</a>
-    <a asp-area="Admin" asp-controller="Carts" asp-action="Index">Carts</a>
+    <a asp-area="Admin" asp-controller="ProductManagement" asp-action="Index">Product Management</a>
+    <a asp-area="Admin" asp-controller="CartManagement" asp-action="Index">Cart Management</a>
     <a asp-area="Admin" asp-controller="Orders" asp-action="Index">Orders</a>
-    <a asp-area="Admin" asp-controller="UserManagement" asp-action="Index">Users</a>
+    <a asp-area="Admin" asp-controller="UserManagement" asp-action="Index">User Management</a>
 
     @{
         var role = User.FindFirst(ClaimTypes.Role)?.Value;
         if (role == RoleType.SuperAdmin.ToName())
         {
-            <a asp-area="Admin" asp-controller="AdminManagement" asp-action="Index">Admins</a>
+            <a asp-area="Admin" asp-controller="AdminManagement" asp-action="Index">Admin Management</a>
         }
     }
 

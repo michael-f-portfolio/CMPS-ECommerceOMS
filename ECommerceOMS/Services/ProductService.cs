@@ -57,21 +57,24 @@ namespace ECommerceOMS.Services
             }
         }
         
-        public Task<List<Product>> GetAllAsync() 
-            => _productRepository.GetAllAsync();
+        public Task<List<Product>> GetAllAsync() => 
+            _productRepository.GetAllAsync();
 
-        public Task<Product?> GetByIdAsync(int id)
-            => _productRepository.GetByIdAsync(id);
+        public Task<Product?> GetByIdAsync(int id) => 
+            _productRepository.GetByIdAsync(id);
 
-        public async Task AddAsync(Product product, IFormFile? imageFile, ClaimsPrincipal? claimsPrincipal)
+        public Task<List<Product>> GetProductsBySellerIdAsync(string sellerId) => 
+            _productRepository.GetProductsBySellerIdAsync(sellerId);
+
+        public Task<List<Product>> GetAllActiveAsync() => 
+            _productRepository.GetAllActiveAsync();
+
+        public async Task AddAsync(Product product, ClaimsPrincipal claimsPrincipal)
         {
             if (claimsPrincipal == null)
                 throw new UnauthorizedAccessException("You don't have permission to add products.");
  
             var currentUser = await _userService.GetCurrentUserAsync(claimsPrincipal);
- 
-            // Assign this new product to the current user
-            product.SellerId = currentUser.Id;
             
             try
             {
@@ -82,17 +85,10 @@ namespace ECommerceOMS.Services
                 throw new UnauthorizedAccessException(exception.Message);
             }
             
-            if (imageFile is { Length: > 0 })
-            {
-                using var ms = new MemoryStream();
-                await imageFile.CopyToAsync(ms);
-                product.ImageData = ms.ToArray();
-            }
-            
             await _productRepository.AddAsync(product);
         }
 
-        public async Task UpdateAsync(Product updatedProduct, IFormFile? imageFile, ClaimsPrincipal? claimsPrincipal)
+        public async Task UpdateAsync(Product updatedProduct, ClaimsPrincipal? claimsPrincipal)
         {
             var existingProduct = await _productRepository.GetByIdAsync(updatedProduct.Id);
 
@@ -113,12 +109,12 @@ namespace ECommerceOMS.Services
                 throw new UnauthorizedAccessException(exception.Message);
             }
             
-            if (imageFile is { Length: > 0 })
+            /*if (imageFile is { Length: > 0 })
             {
                 using var ms = new MemoryStream();
                 await imageFile.CopyToAsync(ms);
                 updatedProduct.ImageData = ms.ToArray();
-            }
+            }*/
             
             existingProduct.Name = updatedProduct.Name;
             existingProduct.Description =  updatedProduct.Description;
@@ -157,11 +153,6 @@ namespace ECommerceOMS.Services
             }
             
             await _productRepository.DeleteAsync(productToDelete);
-        }
-
-        public Task<List<Product>> GetProductsBySellerIdAsync(string sellerId)
-        {
-            return _productRepository.GetProductsBySellerIdAsync(sellerId);
         }
     }
 }

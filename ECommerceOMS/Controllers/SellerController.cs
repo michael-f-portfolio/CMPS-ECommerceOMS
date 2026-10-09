@@ -1,6 +1,7 @@
 ﻿using System.Security.Claims;
 using ECommerceOMS.Models;
 using ECommerceOMS.Services;
+using ECommerceOMS.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,12 +35,25 @@ public class SellerController : Controller
     public IActionResult Create() => View();
 
     [HttpPost("create")]
-    public async Task<IActionResult> Create(Product product, IFormFile? imageFile)
+    public async Task<IActionResult> Create(ProductCreateViewModel viewModel)
     {
         if (!ModelState.IsValid)
-            return View(product);
+            return View(viewModel);
         
-        await _productService.AddAsync(product, imageFile, User);
+        using var ms = new MemoryStream();
+        await viewModel.ImageFile.CopyToAsync(ms);
+
+        var product = new Product
+        {
+            Name = viewModel.Name,
+            Description = viewModel.Description,
+            Price = viewModel.Price,
+            QuantityOnHand = viewModel.QuantityOnHand,
+            ImageData =  ms.ToArray(),
+            SellerId = GetSellerId()
+        };
+        
+        await _productService.AddAsync(product, User);
         
         return RedirectToAction(nameof(Index));
     }
@@ -50,17 +64,47 @@ public class SellerController : Controller
         var product = await _productService.GetByIdAsync(id);
         if (product == null)
             return RedirectToAction(nameof(Index));
+
+        var editViewModel = new ProductEditViewModel
+        {
+            Id = product.Id,
+            Name = product.Name,
+            Description = product.Description,
+            Price = product.Price,
+            QuantityOnHand = product.QuantityOnHand,
+            IsActive =  product.IsActive,
+            ExistingImageBase64 = product.ImageData != null
+                ? Convert.ToBase64String(product.ImageData)
+                : null
+        };
         
-        return View(product);
+        return View(editViewModel);
     }
 
     [HttpPost("edit/{id}")]
-    public async Task<IActionResult> Edit(Product product, IFormFile? imageFile)
+    public async Task<IActionResult> Edit(ProductEditViewModel  editViewModel)
     {
         if (!ModelState.IsValid)
-            return View(product);
+            return View(editViewModel);
         
-        await _productService.UpdateAsync(product, imageFile, User);
+        var  product = await _productService.GetByIdAsync(editViewModel.Id);
+        if  (product == null)
+            return RedirectToAction(nameof(Index));
+        
+        product.Name = editViewModel.Name;
+        product.Description = editViewModel.Description;
+        product.Price = editViewModel.Price;
+        product.QuantityOnHand = editViewModel.QuantityOnHand;
+        product.IsActive = editViewModel.IsActive;
+
+        if (editViewModel.ImageFile != null)
+        {
+            using var ms =  new MemoryStream();
+            await editViewModel.ImageFile.CopyToAsync(ms);
+            product.ImageData = ms.ToArray();
+        }
+        
+        await _productService.UpdateAsync(product, User);
         return RedirectToAction(nameof(Index));
     }
 
@@ -89,7 +133,7 @@ public class SellerController : Controller
             return RedirectToAction(nameof(Index));
 
         product.IsActive = !product.IsActive;
-        await _productService.UpdateAsync(product, null, User);
+        await _productService.UpdateAsync(product, User);
         
         return RedirectToAction(nameof(Index));
     }

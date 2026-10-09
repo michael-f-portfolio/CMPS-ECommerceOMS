@@ -1,4 +1,5 @@
-﻿@model Product
+﻿@using ECommerceOMS.ViewModels
+@model ProductCreateViewModel
 
 @{
     ViewData["Title"] = "Create Product";
@@ -35,6 +36,7 @@
     <div>
         <label>Upload Image</label>
         <input type="file" name="imageFile" />
+        <span asp-validation-for="ImageFile"></span>
     </div>
 
     <button type="submit">Create Product</button>

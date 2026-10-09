@@ -1,4 +1,4 @@
-﻿@model Product
+﻿@model ECommerceOMS.ViewModels.ProductEditViewModel
 
 @{
     ViewData["Title"] = "Edit Product";
@@ -33,12 +33,16 @@
         <input asp-for="QuantityOnHand"></input>
         <span asp-validation-for="QuantityOnHand"></span>
     </div>
-    
+    <div>
+        <label asp-for="IsActive"></label>
+        <input asp-for="IsActive" type="checkbox" />
+        <span asp-validation-for="IsActive"></span>
+    </div>
     <div>
         <label>Current Image</label> <br/>
-        @if (Model.ImageData != null)
+        @if (Model.ExistingImageBase64 != null)
         {
-            <img src="data:image/png;base64, @Convert.ToBase64String(Model.ImageData)" 
+            <img src="data:image/png;base64, @Model.ExistingImageBase64" 
                  style="width:60px;height:60px;object-fit: cover; border-radius: 4px" 
                  alt="@Model.Name"/>
         }
