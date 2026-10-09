@@ -1,0 +1,58 @@
+﻿@model Cart?
+
+@{
+    ViewData["Title"] = "Your Cart";
+}
+
+<h2>Your Cart</h2>
+
+@if (Model == null || !Model.Items.Any())
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    <table>
+        <thead>
+        <tr>
+            <th>Product</th>
+            <th>Seller</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model.Items)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Product.Seller.DisplayName</td>
+                <td>@item.PriceAtAdd</td>
+                <td>
+                    <form asp-action="Update" method="post">
+                        <input type="hidden" name="itemId" value="@item.Id"/>
+                        <input type="number" name="quantity" value="@item.Quantity" min="0"/>
+                        <button type="submit">Update</button>
+                    </form>
+                </td>
+                <td>@(item.PriceAtAdd * item.Quantity)</td>
+                <td>
+                    <form asp-action="Remove" method="post">
+                        <input type="hidden" name="itemId" value="@item.Id"/>
+                        <button type="submit">Remove</button>
+                    </form>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+    
+    <p>
+        <span>Total:</span>
+        @Model.Items.Sum(i => i.PriceAtAdd * i.Quantity)
+    </p>
+    
+    <button>Checkout (NYI)</button>
+}
