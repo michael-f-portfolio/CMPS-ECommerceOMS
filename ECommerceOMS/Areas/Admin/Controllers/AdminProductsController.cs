@@ -8,13 +8,10 @@ namespace ECommerceOMS.Areas.Admin.Controllers
     public class AdminProductsController : AdminBaseController
     {
         private readonly ProductService _productService;
-        private readonly UserService _userService;
 
-        public AdminProductsController(ProductService productService,  
-                                       UserService userService)
+        public AdminProductsController(ProductService productService)
         {
             _productService = productService;
-            _userService = userService;
         }
         
         [HttpGet("")]
@@ -39,17 +36,8 @@ namespace ECommerceOMS.Areas.Admin.Controllers
         {
             if (!ModelState.IsValid)
                 return View(product);
-
-            if (imageFile is { Length: > 0 })
-            {
-                using var ms = new MemoryStream();
-                await imageFile.CopyToAsync(ms);
-                product.ImageData = ms.ToArray();
-            }
-
-            var currentUser = await _userService.GetCurrentUserAsync(User);
-            await _productService.UpdateAsync(product, currentUser);
             
+            await _productService.UpdateAsync(product, imageFile, User);
             return RedirectToAction(nameof(Index));
         }
 
@@ -66,11 +54,7 @@ namespace ECommerceOMS.Areas.Admin.Controllers
         [HttpPost("delete/{id}"), ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var currentUser = await _userService.GetCurrentUserAsync(User);
-            var product = await _productService.GetByIdAsync(id);
-            if (product != null)
-                await _productService.DeleteAsync(product,  currentUser);
-
+            await _productService.DeleteAsync(id,  User);
             return RedirectToAction(nameof(Index));
         }
 
@@ -80,10 +64,9 @@ namespace ECommerceOMS.Areas.Admin.Controllers
             var product = await _productService.GetByIdAsync(id);
             if (product == null)
                 return RedirectToAction(nameof(Index));
-
-            var currentUser = await _userService.GetCurrentUserAsync(User);
+            
             product.IsActive = !product.IsActive;
-            await _productService.UpdateAsync(product,  currentUser);
+            await _productService.UpdateAsync(product,null, User);
 
             return RedirectToAction(nameof(Index));
         }

@@ -19,7 +19,7 @@
 
         if (role == RoleType.Seller.ToName())
         {
-            <a asp-controller="SellerProducts" asp-action="Index">My Products</a> 
+            <a asp-controller="Seller" asp-action="Index">My Products</a> 
         }
 
         if (role == RoleType.Admin.ToName() || role == RoleType.SuperAdmin.ToName())
