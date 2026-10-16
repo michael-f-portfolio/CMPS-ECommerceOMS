@@ -1,0 +1,71 @@
+﻿@model ECommerceOMS.ViewModels.OrderEditViewModel
+
+@{
+    ViewData["Title"] = "Edit Order";
+    Layout = "/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Edit Order #@Model.Id</h2>
+
+<form method="post">
+
+    <input asp-for="Id" type="hidden" />
+
+    <div>
+        <label>Buyer</label>
+        <input value="@Model.BuyerEmail" readonly />
+    </div>
+
+    <div>
+        <label>Total Cost</label>
+        <input value="@Model.TotalCost" readonly />
+    </div>
+
+    <div>
+        <label asp-for="PaymentStatus">Payment Status</label>
+        <select asp-for="PaymentStatus">
+            <option>Pending</option>
+            <option>Paid</option>
+            <option>Failed</option>
+            <option>Refunded</option>
+        </select>
+    </div>
+
+    <div>
+        <label asp-for="OrderStatus">Order Status</label>
+        <select asp-for="OrderStatus">
+            <option>Pending</option>
+            <option>Processing</option>
+            <option>Shipped</option>
+            <option>Completed</option>
+            <option>Cancelled</option>
+        </select>
+    </div>
+
+    <button type="submit">Save</button>
+    <a asp-action="Index">Cancel</a>
+</form>
+
+<hr />
+
+<h3>Items</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Product</th>
+        <th>Quantity</th>
+        <th>Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+            <td>@item.Product?.Name</td>
+            <td>@item.Quantity</td>
+            <td>@item.PriceAtPurchase</td>
+        </tr>
+    }
+    </tbody>
+</table>

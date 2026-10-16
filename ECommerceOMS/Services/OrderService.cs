@@ -18,14 +18,19 @@ public class OrderService
         _orderRepository = orderRepository;
     }
 
+    public async Task<List<Order>> GetAllAsync()
+    {
+        return await _orderRepository.GetAllAsync();
+    }
+
     public async Task<List<Order>> GetByBuyerIdAsync(string buyerId)
     {
         return await _orderRepository.GetByBuyerIdAsync(buyerId);
     }
 
-    public async Task<Order> GetByIdAsync(int id, string buyerId)
+    public async Task<Order> GetByIdAsync(int id/*, string buyerId*/)
     {
-        return await _orderRepository.GetByIdAsync(id, buyerId);
+        return await _orderRepository.GetByIdAsync(id/*, buyerId*/);
     }
     
     public async Task<Order> CreateOrderFromCartAsync(Order order)
@@ -69,5 +74,10 @@ public class OrderService
         await _cartRepository.SaveChangesAsync();
 
         return order;
+    }
+
+    public async Task UpdateAsync(Order order)
+    {
+        await _orderRepository.UpdateAsync(order);
     }
 }

@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerceOMS.Controllers;
 
+[Route("orders")]
 public class OrdersController : Controller
 {
     private readonly OrderService _orderService;
@@ -24,7 +25,7 @@ public class OrdersController : Controller
     [HttpGet("details/{id:int}")]
     public async Task<IActionResult> Details(int id)
     {
-        var order = await _orderService.GetByIdAsync(id, User.FindFirstValue(ClaimTypes.NameIdentifier));
+        var order = await _orderService.GetByIdAsync(id/*, User.FindFirstValue(ClaimTypes.NameIdentifier)*/);
         return View(order);
     }
 }

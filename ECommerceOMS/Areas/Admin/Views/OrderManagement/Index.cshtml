@@ -1,5 +1,38 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<Order>
+
 @{
+    ViewData["Title"] = "Orders";
+    Layout = "/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
+
+<h2>Orders</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Order #</th>
+            <th>Buyer</th>
+            <th>Date Created</th>
+            <th>Total Cost</th>
+            <th>Payment Status</th>
+            <th>Order Status</th>
+            <th># of Items</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var o in Model)
+        {
+            <tr>
+                <td>@o.Id</td>
+                <td>@o.Buyer.Email</td>
+                <td>@o.CreatedAt.ToString("yyyy-MM-dd")</td>
+                <td>@o.TotalCost</td>
+                <td>@o.PaymentStatus</td>
+                <td>@o.OrderStatus</td>
+                <td>@o.Items.Count</td>
+                <td><a asp-action="Edit" asp-route-id="@o.Id">Edit</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
