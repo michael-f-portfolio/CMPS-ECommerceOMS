@@ -12,6 +12,7 @@ namespace ECommerceOMS.Models
         [Required]
         [StringLength(1000)]
         public string Description { get; set; } = null!;
+        public string Category { get; set; }
         [Range(0.01, 100000)]
         public decimal Price { get; set; }
         [Range(0, int.MaxValue)]
@@ -20,5 +21,23 @@ namespace ECommerceOMS.Models
         public bool IsActive { get; set; }
         public string? SellerId { get; set; }
         public ApplicationUser? Seller { get; set; }
+    }
+
+    public static class ProductCategories
+    {
+        public const string Peripherals = "Peripherals";
+        public const string Components = "Components";
+        public const string Monitors = "Monitors";
+        public const string Accessories = "Accessories";
+        public const string Furniture = "Furniture";
+
+        public static readonly List<string> All =
+        [
+            Peripherals,
+            Components,
+            Monitors,
+            Accessories,
+            Furniture
+        ];
     }
 }

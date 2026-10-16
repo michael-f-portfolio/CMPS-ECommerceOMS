@@ -34,6 +34,7 @@ namespace ECommerceOMS.Areas.Admin.Controllers
                 Id = product.Id,
                 Name = product.Name,
                 Description = product.Description,
+                Category = product.Category,
                 Price = product.Price,
                 QuantityOnHand = product.QuantityOnHand,
                 IsActive = product.IsActive,
@@ -57,6 +58,7 @@ namespace ECommerceOMS.Areas.Admin.Controllers
             
             product.Name = editViewModel.Name;
             product.Description = editViewModel.Description;
+            product.Category = editViewModel.Category;
             product.Price = editViewModel.Price;
             product.QuantityOnHand = editViewModel.QuantityOnHand;
             product.IsActive = editViewModel.IsActive;
