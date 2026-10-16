@@ -54,7 +54,7 @@ public class OrderService
             var product = item.Product;
             product.QuantityOnHand -= item.Quantity;
             
-            if (product.QuantityOnHand < 0)
+            if (product.QuantityOnHand <= 0)
                 product.IsActive = false;
             
             order.Items.Add(new OrderItem

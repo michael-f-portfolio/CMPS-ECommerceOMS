@@ -1,5 +1,6 @@
 ﻿using ECommerceOMS.Models.Identity;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ECommerceOMS.Models
 {
@@ -21,6 +22,24 @@ namespace ECommerceOMS.Models
         public bool IsActive { get; set; }
         public string? SellerId { get; set; }
         public ApplicationUser? Seller { get; set; }
+
+        [NotMapped]
+        public decimal DiscountPercentage
+        {
+            get
+            {
+                if (QuantityOnHand > 40)
+                    return 20m;
+                if (QuantityOnHand > 20)
+                    return 10m;
+
+                return 0m;
+            }
+        }
+        
+        [NotMapped]
+        public decimal DiscountedPrice =>
+            Price * (1 - DiscountPercentage / 100);
     }
 
     public static class ProductCategories

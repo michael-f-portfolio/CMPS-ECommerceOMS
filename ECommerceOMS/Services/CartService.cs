@@ -98,7 +98,7 @@ public class CartService
             {
                 ProductId = productId,
                 Quantity = Math.Min(quantity, maxQty),
-                PriceAtAdd = product.Price
+                PriceAtAdd = product.DiscountedPrice
             });
         }
 
