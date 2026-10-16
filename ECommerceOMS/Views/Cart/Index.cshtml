@@ -8,7 +8,7 @@
 
 @if (TempData["CartWasAdjusted"] != null)
 {
-    <div>
+    <div class="alert">
         @TempData["CartWasAdjusted"]
     </div>
 }
@@ -62,7 +62,7 @@ else
                 <td>
                     <form asp-action="Remove" method="post">
                         <input type="hidden" name="itemId" value="@item.Id"/>
-                        <button type="submit">Remove</button>
+                        <button type="submit" class="btn btn-delete">Remove</button>
                     </form>
                 </td>
             </tr>
@@ -78,7 +78,7 @@ else
     @if (Model?.Items?.Any() == true)
     {
         <form asp-controller="Checkout" asp-action="Index" method="get">
-            <button type="submit">Checkout</button>
+            <button type="submit" class="btn btn-checkout">Checkout</button>
         </form>
     }
 }

@@ -48,9 +48,9 @@
                 </td>
                 <td>@p.Seller?.UserName</td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@p.Id">Edit</a>
+                    <a asp-action="Edit" asp-route-id="@p.Id" class="btn btn-edit">Edit</a>
                     <form asp-action="Toggle" asp-route-id="@p.Id" method="post">
-                        <button type="submit">@(p.IsActive ? "Deactivate" : "Activate")</button>
+                        <button type="submit" class="btn btn-delete">@(p.IsActive ? "Deactivate" : "Activate")</button>
                     </form>
                 </td>
             </tr>

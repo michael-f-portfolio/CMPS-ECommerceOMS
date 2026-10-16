@@ -49,11 +49,11 @@
                                 
                             }
                         </select>
-                        <button type="submit">Change Role</button>
+                        <button type="submit" class="btn btn-edit">Change Role</button>
                     </form>
                     <form asp-area="Admin" asp-controller="UserManagement" asp-action="ToggleLock" method="post">
                         <input type="hidden" name="email" value="@user.Email" />
-                        <button type="submit">
+                        <button type="submit" class="btn btn-danger">
                             @(user.isLocked ? "Unlock" : "Lock")
                             </button>
                     </form>
