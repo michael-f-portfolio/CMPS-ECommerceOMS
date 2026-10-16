@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ECommerceOMS.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20261010010821_InitialCreate")]
+    [Migration("20261013184521_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -155,7 +155,7 @@ namespace ECommerceOMS.Migrations
                             DisplayName = "Test Super Admin",
                             Email = "superadmin@test.com",
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
+                            LockoutEnabled = true,
                             NormalizedEmail = "SUPERADMIN@TEST.COM",
                             NormalizedUserName = "SUPERADMIN@TEST.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEOVoN5jpbRkKNaBQCPfpqaB6VBH8EmlnqrgDZ6jozuPouLV6EaHYGxUn46gf3GktYQ==",
@@ -172,7 +172,7 @@ namespace ECommerceOMS.Migrations
                             DisplayName = "Test Administrator",
                             Email = "admin@test.com",
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
+                            LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@TEST.COM",
                             NormalizedUserName = "ADMIN@TEST.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAENhdpnO5oUWM+s882qifac7x5CvslMHa5SWHWfUGR/cz238vsoG7brjZ5saQLEORqg==",
@@ -189,7 +189,7 @@ namespace ECommerceOMS.Migrations
                             DisplayName = "Test Buyer",
                             Email = "buyer@test.com",
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
+                            LockoutEnabled = true,
                             NormalizedEmail = "BUYER@TEST.COM",
                             NormalizedUserName = "BUYER@TEST.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEJ5A6iOUDcwdwHZQqBhl7ZnuJ4s8nMKvrM4JcwOJgrQ4Mmqkcw9s6tRzDymHNh+y8w==",
@@ -206,7 +206,7 @@ namespace ECommerceOMS.Migrations
                             DisplayName = "Test Seller 1",
                             Email = "seller1@test.com",
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
+                            LockoutEnabled = true,
                             NormalizedEmail = "SELLER1@TEST.COM",
                             NormalizedUserName = "SELLER1@TEST.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==",
@@ -223,7 +223,7 @@ namespace ECommerceOMS.Migrations
                             DisplayName = "Test Seller 2",
                             Email = "seller2@test.com",
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
+                            LockoutEnabled = true,
                             NormalizedEmail = "SELLER2@TEST.COM",
                             NormalizedUserName = "SELLER2@TEST.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==",
@@ -240,7 +240,7 @@ namespace ECommerceOMS.Migrations
                             DisplayName = "Test Seller 3",
                             Email = "seller3@test.com",
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
+                            LockoutEnabled = true,
                             NormalizedEmail = "SELLER3@TEST.COM",
                             NormalizedUserName = "SELLER3@TEST.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==",
