@@ -5,6 +5,7 @@
 @inject UserService UserService
 
 @{
+    ViewData["Title"] = "Users";
     Layout = "/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -44,6 +45,8 @@
                             @if (User.FindFirst(ClaimTypes.Role)?.Value == RoleType.SuperAdmin.ToName())
                             {
                                 <option value="@RoleType.Admin">Admin</option>
+                                <option value="@RoleType.SuperAdmin">SuperAdmin</option>
+                                
                             }
                         </select>
                         <button type="submit">Change Role</button>
