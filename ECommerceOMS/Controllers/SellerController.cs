@@ -47,6 +47,7 @@ public class SellerController : Controller
         {
             Name = viewModel.Name,
             Description = viewModel.Description,
+            Category = viewModel.Category,
             Price = viewModel.Price,
             QuantityOnHand = viewModel.QuantityOnHand,
             ImageData =  ms.ToArray(),
@@ -70,6 +71,7 @@ public class SellerController : Controller
             Id = product.Id,
             Name = product.Name,
             Description = product.Description,
+            Category = product.Category,
             Price = product.Price,
             QuantityOnHand = product.QuantityOnHand,
             IsActive =  product.IsActive,
@@ -93,6 +95,7 @@ public class SellerController : Controller
         
         product.Name = editViewModel.Name;
         product.Description = editViewModel.Description;
+        product.Category =  editViewModel.Category;
         product.Price = editViewModel.Price;
         product.QuantityOnHand = editViewModel.QuantityOnHand;
         product.IsActive = editViewModel.IsActive;

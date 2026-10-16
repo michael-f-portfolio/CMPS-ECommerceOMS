@@ -22,6 +22,19 @@
     </div>
     
     <div>
+        <label asp-for="Category"></label>
+
+        <select asp-for="Category">
+            @foreach (var category in ProductCategories.All)
+            {
+                <option value="@category">@category</option>
+            }
+        </select>
+
+        <span asp-validation-for="Category"></span>
+    </div>
+    
+    <div>
         <label asp-for="Price"></label>
         <input asp-for="Price"/>
         <span asp-validation-for="Price"></span>
