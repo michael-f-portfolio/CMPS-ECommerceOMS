@@ -19,7 +19,8 @@ namespace ECommerceOMS.Data.Seed
                 DisplayName = "Test Super Admin",
                 SecurityStamp = "50000000-0000-0000-0000-000000000001",
                 ConcurrencyStamp = "70000000-0000-0000-0000-000000000001",
-                PasswordHash = "AQAAAAIAAYagAAAAEOVoN5jpbRkKNaBQCPfpqaB6VBH8EmlnqrgDZ6jozuPouLV6EaHYGxUn46gf3GktYQ=="
+                PasswordHash = "AQAAAAIAAYagAAAAEOVoN5jpbRkKNaBQCPfpqaB6VBH8EmlnqrgDZ6jozuPouLV6EaHYGxUn46gf3GktYQ==",
+                LockoutEnabled = true
             };
 
             var admin = new ApplicationUser
@@ -33,7 +34,8 @@ namespace ECommerceOMS.Data.Seed
                 DisplayName = "Test Administrator",
                 SecurityStamp = "50000000-0000-0000-0000-000000000002",
                 ConcurrencyStamp = "70000000-0000-0000-0000-000000000002",
-                PasswordHash = "AQAAAAIAAYagAAAAENhdpnO5oUWM+s882qifac7x5CvslMHa5SWHWfUGR/cz238vsoG7brjZ5saQLEORqg=="
+                PasswordHash = "AQAAAAIAAYagAAAAENhdpnO5oUWM+s882qifac7x5CvslMHa5SWHWfUGR/cz238vsoG7brjZ5saQLEORqg==",
+                LockoutEnabled = true
             };
 
             var buyer = new ApplicationUser
@@ -47,7 +49,8 @@ namespace ECommerceOMS.Data.Seed
                 DisplayName = "Test Buyer",
                 SecurityStamp = "50000000-0000-0000-0000-000000000003",
                 ConcurrencyStamp = "70000000-0000-0000-0000-000000000003",
-                PasswordHash = "AQAAAAIAAYagAAAAEJ5A6iOUDcwdwHZQqBhl7ZnuJ4s8nMKvrM4JcwOJgrQ4Mmqkcw9s6tRzDymHNh+y8w=="
+                PasswordHash = "AQAAAAIAAYagAAAAEJ5A6iOUDcwdwHZQqBhl7ZnuJ4s8nMKvrM4JcwOJgrQ4Mmqkcw9s6tRzDymHNh+y8w==",
+                LockoutEnabled = true
             };
 
             var seller1 = new ApplicationUser
@@ -61,7 +64,9 @@ namespace ECommerceOMS.Data.Seed
                 DisplayName = "Test Seller 1",
                 SecurityStamp = "50000000-0000-0000-0000-000000000004",
                 ConcurrencyStamp = "70000000-0000-0000-0000-000000000004",
-                PasswordHash = "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw=="
+                PasswordHash = "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==",
+                LockoutEnabled = true
+                
             };
 
             var seller2 = new ApplicationUser
@@ -75,7 +80,8 @@ namespace ECommerceOMS.Data.Seed
                 DisplayName = "Test Seller 2",
                 SecurityStamp = "50000000-0000-0000-0000-000000000005",
                 ConcurrencyStamp = "70000000-0000-0000-0000-000000000005",
-                PasswordHash = "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw=="
+                PasswordHash = "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==",
+                LockoutEnabled = true
             };
 
             var seller3 = new ApplicationUser
@@ -89,7 +95,8 @@ namespace ECommerceOMS.Data.Seed
                 DisplayName = "Test Seller 3",
                 SecurityStamp = "50000000-0000-0000-0000-000000000006",
                 ConcurrencyStamp = "70000000-0000-0000-0000-000000000006",
-                PasswordHash = "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw=="
+                PasswordHash = "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==",
+                LockoutEnabled = true
             };
 
             modelBuilder.Entity<ApplicationUser>().HasData(

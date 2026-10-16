@@ -64,5 +64,10 @@ else
         @Model.Items.Sum(i => i.PriceAtAdd * i.Quantity)
     </p>
     
-    <button>Checkout (NYI)</button>
+    @if (Model?.Items?.Any() == true)
+    {
+        <form asp-controller="Checkout" asp-action="Index" method="get">
+            <button type="submit">Checkout</button>
+        </form>
+    }
 }

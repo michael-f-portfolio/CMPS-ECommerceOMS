@@ -152,7 +152,7 @@ namespace ECommerceOMS.Migrations
                             DisplayName = "Test Super Admin",
                             Email = "superadmin@test.com",
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
+                            LockoutEnabled = true,
                             NormalizedEmail = "SUPERADMIN@TEST.COM",
                             NormalizedUserName = "SUPERADMIN@TEST.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEOVoN5jpbRkKNaBQCPfpqaB6VBH8EmlnqrgDZ6jozuPouLV6EaHYGxUn46gf3GktYQ==",
@@ -169,7 +169,7 @@ namespace ECommerceOMS.Migrations
                             DisplayName = "Test Administrator",
                             Email = "admin@test.com",
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
+                            LockoutEnabled = true,
                             NormalizedEmail = "ADMIN@TEST.COM",
                             NormalizedUserName = "ADMIN@TEST.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAENhdpnO5oUWM+s882qifac7x5CvslMHa5SWHWfUGR/cz238vsoG7brjZ5saQLEORqg==",
@@ -186,7 +186,7 @@ namespace ECommerceOMS.Migrations
                             DisplayName = "Test Buyer",
                             Email = "buyer@test.com",
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
+                            LockoutEnabled = true,
                             NormalizedEmail = "BUYER@TEST.COM",
                             NormalizedUserName = "BUYER@TEST.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEJ5A6iOUDcwdwHZQqBhl7ZnuJ4s8nMKvrM4JcwOJgrQ4Mmqkcw9s6tRzDymHNh+y8w==",
@@ -203,7 +203,7 @@ namespace ECommerceOMS.Migrations
                             DisplayName = "Test Seller 1",
                             Email = "seller1@test.com",
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
+                            LockoutEnabled = true,
                             NormalizedEmail = "SELLER1@TEST.COM",
                             NormalizedUserName = "SELLER1@TEST.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==",
@@ -220,7 +220,7 @@ namespace ECommerceOMS.Migrations
                             DisplayName = "Test Seller 2",
                             Email = "seller2@test.com",
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
+                            LockoutEnabled = true,
                             NormalizedEmail = "SELLER2@TEST.COM",
                             NormalizedUserName = "SELLER2@TEST.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==",
@@ -237,7 +237,7 @@ namespace ECommerceOMS.Migrations
                             DisplayName = "Test Seller 3",
                             Email = "seller3@test.com",
                             EmailConfirmed = true,
-                            LockoutEnabled = false,
+                            LockoutEnabled = true,
                             NormalizedEmail = "SELLER3@TEST.COM",
                             NormalizedUserName = "SELLER3@TEST.COM",
                             PasswordHash = "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==",
@@ -246,6 +246,104 @@ namespace ECommerceOMS.Migrations
                             TwoFactorEnabled = false,
                             UserName = "seller3@test.com"
                         });
+                });
+
+            modelBuilder.Entity("ECommerceOMS.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("BillingCity")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BillingCountry")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BillingPostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BillingProvince")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BillingStreet")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BuyerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("CardHolderName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CardNumberMasked")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Expiry")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OrderStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PaymentStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<decimal>("TotalCost")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BuyerId");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("ECommerceOMS.Models.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("PriceAtPurchase")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<string>("SellerId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SellerId");
+
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("ECommerceOMS.Models.Product", b =>
@@ -647,6 +745,40 @@ namespace ECommerceOMS.Migrations
                     b.Navigation("Product");
                 });
 
+            modelBuilder.Entity("ECommerceOMS.Models.Order", b =>
+                {
+                    b.HasOne("ECommerceOMS.Models.Identity.ApplicationUser", "Buyer")
+                        .WithMany()
+                        .HasForeignKey("BuyerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Buyer");
+                });
+
+            modelBuilder.Entity("ECommerceOMS.Models.OrderItem", b =>
+                {
+                    b.HasOne("ECommerceOMS.Models.Order", "Order")
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ECommerceOMS.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("ECommerceOMS.Models.Identity.ApplicationUser", "Seller")
+                        .WithMany()
+                        .HasForeignKey("SellerId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("Seller");
+                });
+
             modelBuilder.Entity("ECommerceOMS.Models.Product", b =>
                 {
                     b.HasOne("ECommerceOMS.Models.Identity.ApplicationUser", "Seller")
@@ -708,6 +840,11 @@ namespace ECommerceOMS.Migrations
                 });
 
             modelBuilder.Entity("ECommerceOMS.Models.Cart", b =>
+                {
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("ECommerceOMS.Models.Order", b =>
                 {
                     b.Navigation("Items");
                 });

@@ -19,11 +19,13 @@ builder.Services.AddScoped<UserService>();
 builder.Services.AddScoped<AdminService>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<CartService>();
+builder.Services.AddScoped<OrderService>();
 
 // Repositories
 builder.Services.AddScoped<UserRepository>();
 builder.Services.AddScoped<ProductRepository>();
 builder.Services.AddScoped<CartRepository>();
+builder.Services.AddScoped<OrderRepository>();
 
 // Identity Setup
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()

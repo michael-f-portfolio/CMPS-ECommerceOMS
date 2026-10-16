@@ -41,7 +41,7 @@ namespace ECommerceOMS.Controllers
 
             return role switch
             {
-                nameof(RoleType.SuperAdmin) => RedirectToAction("Index", "SuperAdmin"),
+                nameof(RoleType.SuperAdmin) => RedirectToAction("Index", "Admin"),
                 nameof(RoleType.Admin) => RedirectToAction("Index", "Admin"),
                 nameof(RoleType.Seller) => RedirectToAction("Index", "Seller"),
                 _ => RedirectToAction("Index", "Buyer")

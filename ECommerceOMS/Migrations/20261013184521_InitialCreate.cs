@@ -160,6 +160,58 @@ namespace ECommerceOMS.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Carts",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BuyerId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Carts", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Carts_AspNetUsers_BuyerId",
+                        column: x => x.BuyerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BuyerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TotalCost = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PaymentStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OrderStatus = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CardHolderName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CardNumberMasked = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Expiry = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BillingStreet = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BillingCity = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BillingProvince = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BillingCountry = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    BillingPostalCode = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_AspNetUsers_BuyerId",
+                        column: x => x.BuyerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Products",
                 columns: table => new
                 {
@@ -183,6 +235,69 @@ namespace ECommerceOMS.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.CreateTable(
+                name: "CartItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CartId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    PriceAtAdd = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CartItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_CartItems_Carts_CartId",
+                        column: x => x.CartId,
+                        principalTable: "Carts",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CartItems_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<int>(type: "int", nullable: true),
+                    ProductId = table.Column<int>(type: "int", nullable: true),
+                    SellerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    PriceAtPurchase = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_AspNetUsers_SellerId",
+                        column: x => x.SellerId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
@@ -199,12 +314,12 @@ namespace ECommerceOMS.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "DisplayName", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "10000000-0000-0000-0000-000000000001", 0, "70000000-0000-0000-0000-000000000001", "Test Super Admin", "superadmin@test.com", true, false, null, "SUPERADMIN@TEST.COM", "SUPERADMIN@TEST.COM", "AQAAAAIAAYagAAAAEOVoN5jpbRkKNaBQCPfpqaB6VBH8EmlnqrgDZ6jozuPouLV6EaHYGxUn46gf3GktYQ==", null, false, "50000000-0000-0000-0000-000000000001", false, "superadmin@test.com" },
-                    { "10000000-0000-0000-0000-000000000002", 0, "70000000-0000-0000-0000-000000000002", "Test Administrator", "admin@test.com", true, false, null, "ADMIN@TEST.COM", "ADMIN@TEST.COM", "AQAAAAIAAYagAAAAENhdpnO5oUWM+s882qifac7x5CvslMHa5SWHWfUGR/cz238vsoG7brjZ5saQLEORqg==", null, false, "50000000-0000-0000-0000-000000000002", false, "admin@test.com" },
-                    { "10000000-0000-0000-0000-000000000003", 0, "70000000-0000-0000-0000-000000000003", "Test Buyer", "buyer@test.com", true, false, null, "BUYER@TEST.COM", "BUYER@TEST.COM", "AQAAAAIAAYagAAAAEJ5A6iOUDcwdwHZQqBhl7ZnuJ4s8nMKvrM4JcwOJgrQ4Mmqkcw9s6tRzDymHNh+y8w==", null, false, "50000000-0000-0000-0000-000000000003", false, "buyer@test.com" },
-                    { "11111111-aaaa-aaaa-aaaa-aaaaaaaaaaaa", 0, "70000000-0000-0000-0000-000000000004", "Test Seller 1", "seller1@test.com", true, false, null, "SELLER1@TEST.COM", "SELLER1@TEST.COM", "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==", null, false, "50000000-0000-0000-0000-000000000004", false, "seller1@test.com" },
-                    { "22222222-bbbb-bbbb-bbbb-bbbbbbbbbbbb", 0, "70000000-0000-0000-0000-000000000005", "Test Seller 2", "seller2@test.com", true, false, null, "SELLER2@TEST.COM", "SELLER2@TEST.COM", "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==", null, false, "50000000-0000-0000-0000-000000000005", false, "seller2@test.com" },
-                    { "33333333-cccc-cccc-cccc-cccccccccccc", 0, "70000000-0000-0000-0000-000000000006", "Test Seller 3", "seller3@test.com", true, false, null, "SELLER3@TEST.COM", "SELLER3@TEST.COM", "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==", null, false, "50000000-0000-0000-0000-000000000006", false, "seller3@test.com" }
+                    { "10000000-0000-0000-0000-000000000001", 0, "70000000-0000-0000-0000-000000000001", "Test Super Admin", "superadmin@test.com", true, true, null, "SUPERADMIN@TEST.COM", "SUPERADMIN@TEST.COM", "AQAAAAIAAYagAAAAEOVoN5jpbRkKNaBQCPfpqaB6VBH8EmlnqrgDZ6jozuPouLV6EaHYGxUn46gf3GktYQ==", null, false, "50000000-0000-0000-0000-000000000001", false, "superadmin@test.com" },
+                    { "10000000-0000-0000-0000-000000000002", 0, "70000000-0000-0000-0000-000000000002", "Test Administrator", "admin@test.com", true, true, null, "ADMIN@TEST.COM", "ADMIN@TEST.COM", "AQAAAAIAAYagAAAAENhdpnO5oUWM+s882qifac7x5CvslMHa5SWHWfUGR/cz238vsoG7brjZ5saQLEORqg==", null, false, "50000000-0000-0000-0000-000000000002", false, "admin@test.com" },
+                    { "10000000-0000-0000-0000-000000000003", 0, "70000000-0000-0000-0000-000000000003", "Test Buyer", "buyer@test.com", true, true, null, "BUYER@TEST.COM", "BUYER@TEST.COM", "AQAAAAIAAYagAAAAEJ5A6iOUDcwdwHZQqBhl7ZnuJ4s8nMKvrM4JcwOJgrQ4Mmqkcw9s6tRzDymHNh+y8w==", null, false, "50000000-0000-0000-0000-000000000003", false, "buyer@test.com" },
+                    { "11111111-aaaa-aaaa-aaaa-aaaaaaaaaaaa", 0, "70000000-0000-0000-0000-000000000004", "Test Seller 1", "seller1@test.com", true, true, null, "SELLER1@TEST.COM", "SELLER1@TEST.COM", "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==", null, false, "50000000-0000-0000-0000-000000000004", false, "seller1@test.com" },
+                    { "22222222-bbbb-bbbb-bbbb-bbbbbbbbbbbb", 0, "70000000-0000-0000-0000-000000000005", "Test Seller 2", "seller2@test.com", true, true, null, "SELLER2@TEST.COM", "SELLER2@TEST.COM", "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==", null, false, "50000000-0000-0000-0000-000000000005", false, "seller2@test.com" },
+                    { "33333333-cccc-cccc-cccc-cccccccccccc", 0, "70000000-0000-0000-0000-000000000006", "Test Seller 3", "seller3@test.com", true, true, null, "SELLER3@TEST.COM", "SELLER3@TEST.COM", "AQAAAAIAAYagAAAAEJOVpDItScCqrZ0giYqMBLdIR5/eA94iD/XAzJ9XcYpI0zujjl1xJzUC6B6QiA7zCw==", null, false, "50000000-0000-0000-0000-000000000006", false, "seller3@test.com" }
                 });
 
             migrationBuilder.InsertData(
@@ -279,6 +394,41 @@ namespace ECommerceOMS.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_CartItems_CartId",
+                table: "CartItems",
+                column: "CartId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartItems_ProductId",
+                table: "CartItems",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Carts_BuyerId",
+                table: "Carts",
+                column: "BuyerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_ProductId",
+                table: "OrderItems",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_SellerId",
+                table: "OrderItems",
+                column: "SellerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_BuyerId",
+                table: "Orders",
+                column: "BuyerId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Products_SellerId",
                 table: "Products",
                 column: "SellerId");
@@ -303,10 +453,22 @@ namespace ECommerceOMS.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "CartItems");
+
+            migrationBuilder.DropTable(
+                name: "OrderItems");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Carts");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

@@ -1,0 +1,45 @@
+﻿@model Order
+
+<h2>Order #@Model.Id</h2>
+
+<p><strong>Date:</strong> @Model.CreatedAt.ToString("yyyy-MM-dd")</p>
+<p><strong>Total:</strong> @Model.TotalCost.ToString("C")</p>
+<p><strong>Status:</strong> @Model.OrderStatus</p>
+
+<h3>Items</h3>
+
+<table>
+    <thead>
+    <tr>
+        <th>Product</th>
+        <th>Seller</th>
+        <th>Quantity</th>
+        <th>Price</th>
+        <th>Subtotal</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var item in Model.Items)
+    {
+        <tr>
+            <td>@item.Product.Name</td>
+            <td>@item.Seller.DisplayName</td>
+            <td>@item.Quantity</td>
+            <td>@item.PriceAtPurchase.ToString("C")</td>
+            <td>@((item.PriceAtPurchase * item.Quantity).ToString("C"))</td>
+        </tr>
+    }
+    </tbody>
+</table>
+
+<h3>Billing Information</h3>
+
+<p><strong>Name:</strong> @Model.CardHolderName</p>
+<p><strong>Card:</strong> @Model.CardNumberMasked</p>
+<p><strong>Expiry:</strong> @Model.Expiry</p>
+
+<p><strong>Street:</strong> @Model.BillingStreet</p>
+<p><strong>Postal Code:</strong> @Model.BillingCity</p>
+<p><strong>Province:</strong> @Model.BillingProvince</p>
+<p><strong>Country:</strong> @Model.BillingCountry</p>
+<p><strong>Zip Code:</strong> @Model.BillingPostalCode</p>

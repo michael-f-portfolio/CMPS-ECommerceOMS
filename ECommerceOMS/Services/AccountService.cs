@@ -49,7 +49,8 @@ namespace ECommerceOMS.Services
                 UserName = model.Email,
                 Email = model.Email,
                 DisplayName = model.DisplayName,
-                EmailConfirmed = true
+                EmailConfirmed = true,
+                LockoutEnabled = true
             };
 
             var created = await _userRepository.CreateAsync(user, model.Password);
