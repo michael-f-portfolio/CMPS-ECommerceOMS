@@ -1,4 +1,5 @@
-﻿using ECommerceOMS.Services;
+﻿using ECommerceOMS.Models.Identity;
+using ECommerceOMS.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,6 +18,7 @@ namespace ECommerceOMS.Areas.Admin.Controllers
             _adminService = adminService;
         }
 
+        [HttpGet("")]
         public async Task<IActionResult> Index()
         {
             var admins = await _adminService.GetAdminsAsync();
@@ -24,40 +26,20 @@ namespace ECommerceOMS.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PromoteToSuperAdmin(string email)
+        public async Task<IActionResult> ChangeRole(string email, RoleType newRole)
         {
             var actingUserEmail = User.Identity?.Name;
             if (actingUserEmail == null)
                 return Unauthorized();
-
-            if (actingUserEmail == email)
-                return Unauthorized();
-
-            var success = await _adminService.ChangeRoleAsync(actingUserEmail, email, Models.Identity.RoleType.SuperAdmin);
+            
+            var success =  await _adminService.ChangeRoleAsync(actingUserEmail, email, newRole);
             if (!success)
-                TempData["Error"] = "Promotion not allowed.";
+                TempData["Error"] = "Role change not allowed.";
 
             return RedirectToAction(nameof(Index));
         }
-
-        [HttpPost]
-        public async Task<IActionResult> DemoteToAdmin(string email)
-        {
-            var actingUserEmail = User.Identity?.Name;
-            if (actingUserEmail == null)
-                return Unauthorized();
-
-            if (actingUserEmail == email)
-                return Unauthorized();
-
-            var success = await _adminService.ChangeRoleAsync(actingUserEmail, email, Models.Identity.RoleType.Admin);
-            if (!success)
-                TempData["Error"] = "Promotion not allowed.";
-
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpPost]
+        
+        [HttpPost("toggle")]
         public async Task<IActionResult> ToggleLock(string email)
         {
             var actingEmail = User.Identity?.Name;
