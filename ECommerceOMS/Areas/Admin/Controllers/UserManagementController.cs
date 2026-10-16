@@ -45,7 +45,7 @@ namespace ECommerceOMS.Areas.Admin.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
+        [HttpPost("toggle")]
         public async Task<IActionResult> ToggleLock(string email)
         {
             var actingEmail = User.Identity?.Name;
