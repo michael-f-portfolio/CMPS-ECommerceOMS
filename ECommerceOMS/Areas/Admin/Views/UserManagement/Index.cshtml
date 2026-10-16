@@ -1,4 +1,5 @@
-﻿@using ECommerceOMS.Models.Identity
+﻿@using System.Security.Claims
+@using ECommerceOMS.Models.Identity
 @using ECommerceOMS.Services
 @model List<ApplicationUser>
 @inject UserService UserService
@@ -27,12 +28,12 @@
     <tbody>
         @foreach (var user in Model)
         {
-            var role = await UserService.GetRoleAsync(user.Email);
+            var userRole = await UserService.GetRoleAsync(user.Email);
 
             <tr>
                 <td>@user.Email</td>
                 <td>@user.DisplayName</td>
-                <td>@role</td>
+                <td>@userRole</td>
                 <td>@(user.isLocked ? "Locked" : "Unlocked")</td>
                 <td>
                     <form asp-area="Admin" asp-controller="UserManagement" asp-action="ChangeRole" method="post">
@@ -40,6 +41,10 @@
                         <select name="newRole">
                             <option value="@RoleType.Buyer">Buyer</option>
                             <option value="@RoleType.Seller">Seller</option>
+                            @if (User.FindFirst(ClaimTypes.Role)?.Value == RoleType.SuperAdmin.ToName())
+                            {
+                                <option value="@RoleType.Admin">Admin</option>
+                            }
                         </select>
                         <button type="submit">Change Role</button>
                     </form>
