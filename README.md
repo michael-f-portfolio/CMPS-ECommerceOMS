@@ -1,4 +1,4 @@
- ECommerceOMS
+# ECommerceOMS
 
 A role-based e-commerce Order Management System built with ASP.NET Core MVC, Entity Framework Core, ASP.NET Core Identity, Azure SQL Database, and Azure App Service.
 
