@@ -44,7 +44,7 @@ namespace ECommerceOMS.Controllers
                 nameof(RoleType.SuperAdmin) => RedirectToAction("Index", "Admin"),
                 nameof(RoleType.Admin) => RedirectToAction("Index", "Admin"),
                 nameof(RoleType.Seller) => RedirectToAction("Index", "Seller"),
-                _ => RedirectToAction("Index", "Buyer")
+                _ => RedirectToAction("Index", "Home")
             };
         }
 
@@ -54,13 +54,21 @@ namespace ECommerceOMS.Controllers
                                           : View();
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel viewModel)
         {
-            if (await _accountService.RegisterAsync(model)) 
-                return RedirectToAction("Index", "Buyer");
-            
-            ModelState.AddModelError("", "Registration Failed");
-            return View(model);
+            if (!ModelState.IsValid)
+                return View(viewModel);
+
+            var result = await _accountService.RegisterAsync(viewModel); 
+            if (!result.Succeeded)
+            {
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(nameof(viewModel.Password), error.Description);
+                }
+                return View(viewModel);
+            }
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet("logout")]

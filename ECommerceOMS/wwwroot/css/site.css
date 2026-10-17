@@ -65,6 +65,92 @@ a {
 a:hover {
     color: var(--accent-hover);
 }
+/* ---------- Flexbox --------------*/
+/* --- Forms ---*/
+.form-page {
+    display: flex;
+    justify-content: center;
+}
+
+.form-card {
+    width: 700px;
+    max-width: 100%;
+    
+    background-color: var(--surface);
+    
+    padding: 2rem;
+    
+    border-radius: var(--radius);
+    
+    box-shadow: var(--shadow);
+}
+
+.form-field {
+    margin-bottom: 1rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+}
+
+.form-row .form-field {
+    flex: 1;
+}
+
+.form-actions {
+    display: flex;
+    gap: .75rem;
+    margin-top: 1.5rem;
+}
+
+.product-image-preview {
+    width: 120px;
+    height: 120px;
+    
+    object-fit: cover;
+    
+    border-radius: var(--radius-sm);
+    border: 1px solid var(--line);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.btn-secondary {
+    background-color: var(#6b7280);
+}
+
+.btn-secondary:hover {
+    background-color: var(#4b5563);
+}
+
+.field-validation-error {
+    display: block;
+    margin-top: .25rem;
+    
+    color: var(--danger);
+    font-size: 0.9rem;
+}
+
+.input-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.input-row input {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.input-row span {
+    min-width: 250px;
+    padding-top: 0.5rem;
+}
 
 /* ---------- Navigation ---------- */
 
@@ -149,6 +235,27 @@ nav .nav-end {
 
 .product-card button {
     width: 100%;
+}
+/* ---- Products Table ---- */
+.product-inactive {
+    opacity: 0.55;
+}
+
+.product-inactive td {
+    color: #7b8492;
+}
+
+.product-inactive img {
+    filter: grayscale(100%);
+}
+
+/* */
+.user-inactive {
+    opacity: .55;
+}
+
+.user-inactive td {
+    color: #7b8492;
 }
 
 /* ---------- Prices ---------- */
@@ -245,6 +352,10 @@ button:disabled,
     background-color: var(--warn-hover);
 }
 
+.btn-delete {
+    min-width: 110px;
+}
+
 .btn-delete,
 .btn-danger {
     background-color: var(--danger);
@@ -304,6 +415,12 @@ tbody tr:hover {
 .col-actions {
     text-align: center;
     width: 100px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
 }
 
 td form {

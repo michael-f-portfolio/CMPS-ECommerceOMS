@@ -25,8 +25,8 @@ namespace ECommerceOMS.Repositories
         public async Task<bool> RemoveFromRoleAsync(ApplicationUser user, string role)
             => (await _userManager.RemoveFromRoleAsync(user, role)).Succeeded;
 
-        public async Task<bool> CreateAsync(ApplicationUser user, string password)
-            => (await _userManager.CreateAsync(user, password)).Succeeded;
+        public async Task<IdentityResult> CreateAsync(ApplicationUser user, string password)
+            => await _userManager.CreateAsync(user, password);
 
         public async Task<string?> GetRoleAsync(ApplicationUser user)
         {

@@ -1,28 +1,40 @@
 ﻿@model ECommerceOMS.ViewModels.Account.RegisterViewModel;
 
-<h2>Register</h2>
+<div class="form-page">
+    <div class="form-card">
+        <h2>Register</h2>
 
-<form method="post">
+        <form method="post">
+            <div class="form-field">
+                <label asp-for="DisplayName">Display Name</label>
+                    <input asp-for="DisplayName" />
+                    <span asp-validation-for="DisplayName"></span>
+            </div>
 
-    <div>
-        <label asp-for="DisplayName"></label>
-        <input asp-for="DisplayName" />
-        <span asp-validation-for="DisplayName"></span>
+            <div class="form-field">
+                <label asp-for="Email">Email</label>
+                    <input asp-for="Email" />
+                    <span asp-validation-for="Email"></span>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="Password"></label>
+                    <input asp-for="Password" type="password"/>
+                    <span asp-validation-for="Password"></span>    
+            </div>
+    
+            <div class="form-field">
+                <label asp-for="ConfirmPassword">Confirm Password</label>
+                    <input asp-for="ConfirmPassword" type="password"/>
+                    <span asp-validation-for="ConfirmPassword"></span>                    
+            </div>
+    
+            <button type="submit" class="btn">Register</button>
+
+        </form>        
     </div>
+</div>
 
-    <div>
-        <label asp-for="Email">Email</label>
-        <input asp-for="Email" />
-        <span asp-validation-for="Email"></span>
-    </div>
-
-    <div>
-        <label asp-for="Password"></label>
-        <input asp-for="Password" type="password"/>
-        <span asp-validation-for="Password"></span>
-    </div>
-
-</form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
