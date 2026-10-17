@@ -6,7 +6,7 @@
 
 <h2>My Products</h2>
 
-<a asp-action="Create">Create Product</a>
+<a asp-action="Create" class="btn btn-edit">Create Product</a>
 
 <table>
     <thead>
@@ -34,7 +34,23 @@
             </td>
             <td>@p.Name</td>
             <td>@p.Category</td>
-            <td>@p.Price.ToString("C")</td>
+            <td>
+                @if (p.DiscountPercentage > 0)
+                {
+                    <p>
+                        <span class="old-price">
+                            @p.Price.ToString("C")
+                        </span>
+                        
+                        <span class="discount-price">
+                            @p.DiscountedPrice.ToString("C")
+                        </span>
+                        <span class="discount-badge">
+                            (@p.DiscountPercentage% off)
+                        </span>
+                    </p>   
+                }
+            </td>
             <td>@p.QuantityOnHand</td>
             <td>
                 @if (p.IsActive)

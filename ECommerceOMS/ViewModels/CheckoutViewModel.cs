@@ -5,22 +5,27 @@ namespace ECommerceOMS.ViewModels;
 
 public class CheckoutViewModel
 {
-    [Required]
+    [Required(ErrorMessage = "Cardholder name is required.")]
     public string CardHolderName  { get; set; } = null!;
-    [Required, StringLength(19, MinimumLength = 12)]
+    [Required(ErrorMessage = "Card number is required."), 
+     StringLength(19, MinimumLength = 12, ErrorMessage = "16 digit card number is required.")]
     public string CardNumber { get; set; } = null!;
-    [Required, RegularExpression(@"^\d{2}/\d{2}$")]
+    [Required(ErrorMessage = "Expiration date is required."), 
+     RegularExpression(@"^\d{2}/\d{2}$", ErrorMessage = "Expiration date must be a valid date (MM/YY).")]
     public string ExpirationDate { get; set; } = null!;
-    [Required, StringLength(4, MinimumLength = 3)]
+    [Required(ErrorMessage = "CVV is required."), 
+     StringLength(4, MinimumLength = 3, ErrorMessage = "CVV must be 3 or 4 digits.")]
     public string Cvv { get; set; } = null!;
-    [Required]
+    [Required(ErrorMessage = "Address is required."),]
     public string BillingStreet  { get; set; } = null!;
-    [Required]
+    [Required(ErrorMessage = "City is required."),]
     public string BillingCity { get; set; } = null!;
-    [Required]
+    [Required(ErrorMessage = "Province is required."),]
     public string BillingProvince { get; set; } = null!;
-    [Required]
+    [Required(ErrorMessage = "Country is required."),]
     public string BillingCountry { get; set; } = null!;
-    [Required]
+    [Required(ErrorMessage = "PostalCode is required."), 
+    RegularExpression(@"^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] ?\d[ABCEGHJKLMNPRSTVWXYZ]\d$",
+     ErrorMessage = "Invalid postal code.")]
     public string BillingPostalCode { get; set; } = null!;
 }

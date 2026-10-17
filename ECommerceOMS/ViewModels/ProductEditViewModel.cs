@@ -13,10 +13,11 @@ public class ProductEditViewModel
     [Required] 
     public string Category { get; set; } = null!;
     [Required]
+    [Range(0.01, 100000)]
     public decimal Price { get; set; }
     [Required]
+    [Range(0, int.MaxValue)]
     public int QuantityOnHand { get; set; }
-    
     public IFormFile? ImageFile { get; set; } = null!;
     public bool IsActive { get; set; }
     public string? ExistingImageBase64  { get; set; }

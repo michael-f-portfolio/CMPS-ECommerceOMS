@@ -11,8 +11,10 @@ public class ProductCreateViewModel
     [Required] 
     public string Category { get; set; } = null!;
     [Required]
+    [Range(0.01, 100000)]
     public decimal Price { get; set; }
     [Required]
+    [Range(0, int.MaxValue)]
     public int QuantityOnHand { get; set; }
     [Required] 
     public IFormFile ImageFile { get; set; } = null!;
