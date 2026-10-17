@@ -9,12 +9,12 @@
 
 @if (TempData["Message"] != null)
 {
-    <div>@TempData["Message"]</div>
+    <div class="alert">@TempData["Message"]</div>
 }
 
 @if (Model.Count == 0)
 {
-    <span>There are no carts to manage.</span>
+    <div class="alert">There are no carts to manage.</div>
 }
 else
 {
@@ -24,7 +24,7 @@ else
             <th>Buyer</th>
             <th>Items</th>
             <th>Total Value</th>
-            <th></th>
+            <th class="col-actions">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -32,13 +32,15 @@ else
         {
             <tr>
                 <td>@cart.BuyerDisplayName</td>
-                <td>@cart.ItemCount</td>
-                <td>@cart.TotalValue.ToString("C")</td>
-                <td>
-                    <form asp-action="Clear" method="post">
-                        <input type="hidden" name="cartId" value="@cart.CartId"/>
-                        <button class="btn btn-delete">Clear Cart</button>
-                    </form>
+                <td class="number-column">@cart.ItemCount</td>
+                <td class="currency-column">@cart.TotalValue.ToString("C")</td>
+                <td class="col-actions">
+                    <div class="action-buttons">
+                        <form asp-action="Clear" method="post">
+                            <input type="hidden" name="cartId" value="@cart.CartId"/>
+                            <button class="btn btn-delete">Clear Cart</button>
+                        </form>    
+                    </div>
                 </td>
             </tr>
         }

@@ -23,7 +23,7 @@
             <th>Display Name</th>
             <th>Role</th>
             <th>Status</th>
-            <th>Actions</th>
+            <th >Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -31,7 +31,7 @@
         {
             var userRole = await UserService.GetRoleAsync(user.Email);
 
-            <tr>
+            <tr class="@(!user.isLocked ? "" : "user-inactive")">
                 <td>@user.Email</td>
                 <td>@user.DisplayName</td>
                 <td>@userRole</td>

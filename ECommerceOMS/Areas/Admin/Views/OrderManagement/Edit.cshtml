@@ -5,46 +5,53 @@
     Layout = "/Areas/Admin/Views/Shared/_AdminLayout.cshtml";
 }
 
-<h2>Edit Order #@Model.Id</h2>
+<div class="form-page">
+    <div class="form-card">
+        <h2>Edit Order #@Model.Id</h2>
+        
+        <form method="post">
 
-<form method="post">
+            <input asp-for="Id" type="hidden"/>
 
-    <input asp-for="Id" type="hidden" />
+            <div class="form-field">
+                <label asp-for="@Model.BuyerEmail">Buyer</label>
+                <input asp-for="@Model.BuyerEmail" value="@Model.BuyerEmail" readonly/>
+            </div>
 
-    <div>
-        <label>Buyer</label>
-        <input value="@Model.BuyerEmail" readonly />
+            <div class="form-field">
+                <label asp-for="@Model.TotalCost">Total Cost</label>
+                <input asp-for="@Model.TotalCost" value="@Model.TotalCost" readonly/>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="PaymentStatus">Payment Status</label>
+                <select asp-for="PaymentStatus">
+                    <option>Pending</option>
+                    <option>Paid</option>
+                    <option>Failed</option>
+                    <option>Refunded</option>
+                </select>
+            </div>
+
+            <div class="form-field">
+                <label asp-for="OrderStatus">Order Status</label>
+                <select asp-for="OrderStatus">
+                    <option>Pending</option>
+                    <option>Processing</option>
+                    <option>Shipped</option>
+                    <option>Completed</option>
+                    <option>Cancelled</option>
+                </select>
+            </div>
+            
+            <div class="form-actions">
+                <button type="submit" class="btn btn-checkout">Save</button>
+                <a asp-action="Index" class="btn btn-delete">Cancel</a>    
+            </div>
+        </form>
     </div>
+</div>
 
-    <div>
-        <label>Total Cost</label>
-        <input value="@Model.TotalCost" readonly />
-    </div>
-
-    <div>
-        <label asp-for="PaymentStatus">Payment Status</label>
-        <select asp-for="PaymentStatus">
-            <option>Pending</option>
-            <option>Paid</option>
-            <option>Failed</option>
-            <option>Refunded</option>
-        </select>
-    </div>
-
-    <div>
-        <label asp-for="OrderStatus">Order Status</label>
-        <select asp-for="OrderStatus">
-            <option>Pending</option>
-            <option>Processing</option>
-            <option>Shipped</option>
-            <option>Completed</option>
-            <option>Cancelled</option>
-        </select>
-    </div>
-
-    <button type="submit" class="btn btn-checkout">Save</button>
-    <a asp-action="Index" class="btn btn-delete">Cancel</a>
-</form>
 
 <hr />
 

@@ -17,13 +17,13 @@
             <th>Qty</th>
             <th>Status</th>
             <th>Seller</th>
-            <th style="width: 200px"></th>
+            <th class="col-actions">Actions</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var p in Model)
         {
-            <tr>
+            <tr class="@(p.IsActive ? "" : "product-inactive")">
                 <td>
                     @if (p.ImageData != null)
                     {
@@ -35,7 +35,7 @@
                 <td>@p.Name</td>
                 <td>@p.Category</td>
                 <td>@p.Price.ToString("C")</td>
-                <td>@p.QuantityOnHand</td>
+                <td>@p.QuantityOnHand</td>  
                 <td>
                     @if (p.IsActive)
                     {
@@ -47,11 +47,15 @@
                     }
                 </td>
                 <td>@p.Seller?.UserName</td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@p.Id" class="btn btn-edit">Edit</a>
-                    <form asp-action="Toggle" asp-route-id="@p.Id" method="post">
-                        <button type="submit" class="btn btn-delete">@(p.IsActive ? "Deactivate" : "Activate")</button>
-                    </form>
+                <td class="col-actions">
+                    <div class="action-buttons">
+                        <a asp-action="Edit" asp-route-id="@p.Id" class="btn btn-edit">Edit</a>
+                        <form asp-action="Toggle" asp-route-id="@p.Id" method="post">
+                            <button type="submit" class="btn btn-delete">
+                                @(p.IsActive ? "Deactivate" : "Activate")
+                            </button>
+                        </form>    
+                    </div>
                 </td>
             </tr>
         }

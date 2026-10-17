@@ -42,7 +42,7 @@ namespace ECommerceOMS.Services
             return result.Succeeded;
         }
 
-        public async Task<bool> RegisterAsync(RegisterViewModel model) 
+        public async Task<IdentityResult> RegisterAsync(RegisterViewModel model) 
         {
             var user = new ApplicationUser
             {
@@ -53,15 +53,17 @@ namespace ECommerceOMS.Services
                 LockoutEnabled = true
             };
 
-            var created = await _userRepository.CreateAsync(user, model.Password);
-            
-            if (!created) 
-                return false;
+            var result = await _userRepository.CreateAsync(user, model.Password);
+
+            if (!result.Succeeded)
+            {
+                return result;
+            }
 
             await _userRepository.AddToRoleAsync(user, RoleType.Buyer.ToName());
             await _signInManager.SignInAsync(user, false);
 
-            return true;
+            return result;
         }
 
         public Task LogoutAsync() => _signInManager.SignOutAsync();
