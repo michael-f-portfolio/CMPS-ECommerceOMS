@@ -6,25 +6,25 @@
     <h3>Payment Information</h3>
     
     <div>
-        <label asp-for="CardHolderName"></label>
+        <label asp-for="CardHolderName">Cardholder Name</label>
         <input asp-for="CardHolderName" />
         <span asp-validation-for="CardHolderName"></span>
     </div>
     
     <div>
-        <label asp-for="CardNumber"></label>
+        <label asp-for="CardNumber">Card Number</label>
         <input asp-for="CardNumber"/>
         <span asp-validation-for="CardNumber"></span>
     </div>
     
     <div>
-        <label asp-for="ExpirationDate"></label>
+        <label asp-for="ExpirationDate">Expiration Date</label>
         <input asp-for="ExpirationDate" placeholder="MM/YY"/>
         <span asp-validation-for="ExpirationDate"></span>
     </div>
     
     <div>
-        <label asp-for="Cvv"></label>
+        <label asp-for="Cvv">CVV</label>
         <input asp-for="Cvv"/>
         <span asp-validation-for="Cvv"></span>
     </div>
@@ -32,31 +32,31 @@
     <h3>Billing Address</h3>
     
     <div>
-        <label asp-for="BillingStreet"></label>
+        <label asp-for="BillingStreet">Street</label>
         <input asp-for="BillingStreet"/>
         <span asp-validation-for="BillingStreet"></span>
     </div>
     
     <div>
-        <label asp-for="BillingCity"></label>
+        <label asp-for="BillingCity">City</label>
         <input asp-for="BillingCity"/>
         <span asp-validation-for="BillingCity"></span>
     </div>
 
     <div>
-        <label asp-for="BillingProvince"></label>
+        <label asp-for="BillingProvince">Province</label>
         <input asp-for="BillingProvince"/>
         <span asp-validation-for="BillingProvince"></span>
     </div>
 
     <div>
-        <label asp-for="BillingCountry"></label>
+        <label asp-for="BillingCountry">Country</label>
         <input asp-for="BillingCountry"/>
         <span asp-validation-for="BillingCountry"></span>
     </div>
 
     <div>
-        <label asp-for="BillingPostalCode"></label>
+        <label asp-for="BillingPostalCode">Postal Code</label>
         <input asp-for="BillingPostalCode"/>
         <span asp-validation-for="BillingPostalCode"></span>
     </div>
@@ -65,5 +65,5 @@
 </form>
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }
