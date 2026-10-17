@@ -25,7 +25,7 @@ public class CheckoutViewModel
     [Required(ErrorMessage = "Country is required."),]
     public string BillingCountry { get; set; } = null!;
     [Required(ErrorMessage = "PostalCode is required."), 
-    RegularExpression(@"^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ] ?\d[ABCEGHJKLMNPRSTVWXYZ]\d$",
-     ErrorMessage = "Invalid postal code.")]
+    RegularExpression(@"^[abceghjklmnprstvxyABCEGHJKLMNPRSTVXY]\d[abceghjklmnprstvxyABCEGHJKLMNPRSTVWXYZ] ?\d[abceghjklmnprstvxyABCEGHJKLMNPRSTVWXYZ]\d$",
+     ErrorMessage = "Invalid postal code, must be a1a 1a1.")]
     public string BillingPostalCode { get; set; } = null!;
 }
