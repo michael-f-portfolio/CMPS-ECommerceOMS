@@ -175,4 +175,4 @@ Products can be filtered by category directly from the storefront.
 
 ## AI Usage Disclosure
 
-AI tools were used to assist with brainstorming ideas, debugging issues, researching implementation approaches, and answering development questions throughout this project. All implementation decisions, code integration, testing, deployment, and final submitted work were completed and verified by the author.
+AI tools were used to assist with brainstorming ideas, debugging issues, researching implementation approaches, CSS styling, and answering development questions throughout this project. All implementation decisions, code integration, testing, deployment, and final submitted work were completed and verified by the author.
