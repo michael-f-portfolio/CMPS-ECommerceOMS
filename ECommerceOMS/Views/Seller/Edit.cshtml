@@ -4,75 +4,89 @@
     ViewData["Title"] = "Edit Product";
 }
 
-<h2>Edit Product</h2>
+<div class="form-page">
+    <div class="form-card">
+        <h2>Edit Product</h2>
 
-<form asp-action="Edit" method="post" enctype="multipart/form-data">
-    <input type="hidden" asp-for="Id"/>
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            <input type="hidden" asp-for="Id"/>
     
-    <div>
-        <label asp-for="Name"></label>
-        <input asp-for="Name"/>
-        <span asp-validation-for="Name"></span>
-    </div>
+            <div class="form-field">
+                <label asp-for="Name"></label>
+                <input asp-for="Name"/>
+                <span asp-validation-for="Name"></span>
+            </div>
     
-    <div>
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description"></textarea>
-        <span asp-validation-for="Description"></span>
-    </div>
+            <div class="form-field">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description"></textarea>
+                <span asp-validation-for="Description"></span>
+            </div>
     
-    <div>
-        <label asp-for="Category"></label>
+            <div class="form-field">
+                <label asp-for="Category"></label>
 
-        <select asp-for="Category">
-            @foreach (var category in ProductCategories.All)
-            {
-                <option value="@category">@category</option>
-            }
-        </select>
+                <select asp-for="Category">
+                    @foreach (var category in ProductCategories.All)
+                    {
+                        <option selected="@(Model.Category == category)" value="@category">@category</option>
+                    }
+                </select>
 
-        <span asp-validation-for="Category"></span>
-    </div>
+                <span asp-validation-for="Category"></span>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-field">
+                    <label asp-for="Price"></label>
+                    <input asp-for="Price"/>
+                    <span asp-validation-for="Price"></span>
+                </div>
     
-    <div>
-        <label asp-for="Price"></label>
-        <input asp-for="Price"/>
-        <span asp-validation-for="Price"></span>
-    </div>
+                <div class="form-field">
+                    <label asp-for="QuantityOnHand">Quantity On Hand</label>
+                    <input asp-for="QuantityOnHand"></input>
+                    <span asp-validation-for="QuantityOnHand"></span>
+                </div>
+            </div>
+            
+            <div class="form-field">
+                <label>Status</label>
+                <label class="checkbox-label">
+                    <input asp-for="IsActive" />
+                    Active Product
+                </label>
+            </div>
     
-    <div>
-        <label asp-for="QuantityOnHand"></label>
-        <input asp-for="QuantityOnHand"></input>
-        <span asp-validation-for="QuantityOnHand"></span>
-    </div>
-    <div>
-        <label asp-for="IsActive"></label>
-        <input asp-for="IsActive" type="checkbox" />
-        <span asp-validation-for="IsActive"></span>
-    </div>
+            <div class="form-field">
+                <label>Current Image</label> <br/>
+                @if (Model.ExistingImageBase64 != null)
+                {
+                    <img src="data:image/png;base64, @Model.ExistingImageBase64" 
+                         class="product-image-preview"
+                         alt="@Model.Name"/>
+                }
+                else
+                {
+                    <p>No image uploaded.</p>
+                }
+            </div>
     
-    <div>
-        <label>Current Image</label> <br/>
-        @if (Model.ExistingImageBase64 != null)
-        {
-            <img src="data:image/png;base64, @Model.ExistingImageBase64" 
-                 style="width:60px;height:60px;object-fit: cover; border-radius: 4px" 
-                 alt="@Model.Name"/>
-        }
-        else
-        {
-            <p>No image uploaded.</p>
-        }
-    </div>
+            <div class="form-field">
+                <label>Upload New Image</label>
+                <input type="file" name="imageFile"/>
+            </div>
     
-    <div>
-        <label>Upload New Image</label>
-        <input type="file" name="imageFile"/>
+            <div class="form-actions">
+                <button type="submit" class="btn">Save Changes</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+            </div>
+            
+        </form>
     </div>
-    
-    <button type="submit" class="btn">Save Changes</button>
-    <a asp-action="Index" class="btn btn-delete">Cancel</a>
-</form>
+</div>
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial"/>

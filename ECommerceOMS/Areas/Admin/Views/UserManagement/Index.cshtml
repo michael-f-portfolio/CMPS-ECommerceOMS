@@ -13,7 +13,7 @@
 
 @if (TempData["Error"] is string error)
 {
-    <div>@error</div>
+    <div class="alert">@error</div>
 }
 
 <table>
@@ -23,7 +23,7 @@
             <th>Display Name</th>
             <th>Role</th>
             <th>Status</th>
-            <th >Actions</th>
+            <th class="col-actions">Actions</th>
         </tr>
     </thead>
     <tbody>
@@ -31,32 +31,34 @@
         {
             var userRole = await UserService.GetRoleAsync(user.Email);
 
-            <tr class="@(!user.isLocked ? "" : "user-inactive")">
+            <tr class="@(user.isLocked ? "user-inactive" : "")">
                 <td>@user.Email</td>
                 <td>@user.DisplayName</td>
                 <td>@userRole</td>
                 <td>@(user.isLocked ? "Locked" : "Unlocked")</td>
-                <td>
-                    <form asp-area="Admin" asp-controller="UserManagement" asp-action="ChangeRole" method="post">
-                        <input type="hidden" name="email" value="@user.Email" />
-                        <select name="newRole">
-                            <option value="@RoleType.Buyer">Buyer</option>
-                            <option value="@RoleType.Seller">Seller</option>
-                            @if (User.FindFirst(ClaimTypes.Role)?.Value == RoleType.SuperAdmin.ToName())
-                            {
-                                <option value="@RoleType.Admin">Admin</option>
-                                <option value="@RoleType.SuperAdmin">SuperAdmin</option>
-                                
-                            }
-                        </select>
-                        <button type="submit" class="btn btn-edit">Change Role</button>
-                    </form>
-                    <form asp-area="Admin" asp-controller="UserManagement" asp-action="ToggleLock" method="post">
-                        <input type="hidden" name="email" value="@user.Email" />
-                        <button type="submit" class="btn btn-danger">
-                            @(user.isLocked ? "Unlock" : "Lock")
+                <td class="col-actions">
+                    <div class="user-actions">
+                        <form class="role-form" asp-area="Admin" asp-controller="UserManagement" asp-action="ChangeRole" method="post">
+                            <input type="hidden" name="email" value="@user.Email"/>
+                            <select name="newRole">
+                                <option selected="@(userRole == RoleType.Buyer.ToName())" value="@RoleType.Buyer">Buyer</option>
+                                <option selected="@(userRole == RoleType.Seller.ToName())" value="@RoleType.Seller">Seller</option>
+                                @if (User.FindFirst(ClaimTypes.Role)?.Value == RoleType.SuperAdmin.ToName())
+                                {
+                                    <option selected="@(userRole == RoleType.Admin.ToName())" value="@RoleType.Admin">Admin</option>
+                                    <option selected="@(userRole == RoleType.SuperAdmin.ToName())" value="@RoleType.SuperAdmin">SuperAdmin</option>
+
+                                }
+                            </select>
+                            <button type="submit" class="btn">Update</button>
+                        </form>
+                        <form class="lock-form" asp-area="Admin" asp-controller="UserManagement" asp-action="ToggleLock" method="post">
+                            <input type="hidden" name="email" value="@user.Email"/>
+                            <button type="submit" class="btn btn-delete">
+                                @(user.isLocked ? "Unlock" : "Lock")
                             </button>
-                    </form>
+                        </form>
+                    </div>
                 </td>
             </tr>
         }

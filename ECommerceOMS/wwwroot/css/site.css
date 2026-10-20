@@ -104,6 +104,8 @@ a:hover {
     margin-top: 1.5rem;
 }
 
+
+
 .product-image-preview {
     width: 120px;
     height: 120px;
@@ -415,6 +417,35 @@ tbody tr:hover {
 .col-actions {
     text-align: center;
     width: 100px;
+    min-width: 275px;
+}
+
+.user-actions {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.role-form {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+}
+
+.role-form select {
+    flex: 1;
+    min-width: 120px;
+    margin-bottom: 0;
+}
+
+.lock-form {
+    display: flex;
+}
+
+.action-columns {
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
 }
 
 .action-buttons {

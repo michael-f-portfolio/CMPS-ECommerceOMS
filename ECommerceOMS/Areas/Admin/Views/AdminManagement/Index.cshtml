@@ -13,7 +13,7 @@
 
 @if (TempData["Error"] is string error)
 {
-    <div>@error</div>
+    <div class="alert">@error</div>
 }
 
 @if (Model.Count == 0 || Model.Count == 1)
@@ -29,7 +29,7 @@ else
             <th>Display Name</th>
             <th>Role</th>
             <th>Status</th>
-            <th>Actions</th>
+            <th class="col-actions">Actions</th>
         </tr>
         </thead>
         <tbody>
@@ -39,52 +39,34 @@ else
             {
                 var adminRole = await UserService.GetRoleAsync(admin.Email);
 
-                <tr>
+                <tr class="@(admin.isLocked ? "user-inactive" : "")">
                     <td>@admin.Email</td>
                     <td>@admin.DisplayName</td>
                     <td>@adminRole</td>
                     <td>@(admin.isLocked ? "Locked" : "Unlocked")</td>
-                    <td>
-                        <form asp-area="Admin" asp-controller="AdminManagement" asp-action="ChangeRole">
+                    <td class="col-actions">
+                        <div class="user-actions">
+                            <form class="role-form" asp-area="Admin" asp-controller="AdminManagement" asp-action="ChangeRole">
                             <input type="hidden" name="email" value="@admin.Email"/>
                             <select name="newRole">
-                                <option value="@RoleType.Buyer">Buyer</option>
-                                <option value="@RoleType.Seller">Seller</option>
-                                @if (User.FindFirst(ClaimTypes.Role)?.Value == RoleType.SuperAdmin.ToName() &&
-                                     !adminRole.Equals(RoleType.Admin.ToName()))
+                                <option selected="@(adminRole == RoleType.Buyer.ToName())" value="@RoleType.Buyer">Buyer</option>
+                                <option selected="@(adminRole == RoleType.Seller.ToName())" value="@RoleType.Seller">Seller</option>
+                                @if (User.FindFirst(ClaimTypes.Role)?.Value == RoleType.SuperAdmin.ToName())
                                 {
-                                    <option value="@RoleType.Admin">Admin</option>
-                                }
-                                @if (User.FindFirst(ClaimTypes.Role)?.Value == RoleType.SuperAdmin.ToName() &&
-                                     !adminRole.Equals(RoleType.SuperAdmin.ToName()))
-                                {
-                                    <option value="@RoleType.SuperAdmin">Super Admin</option>
+                                    <option selected="@(adminRole == RoleType.Admin.ToName())" value="@RoleType.Admin">Admin</option>
+                                    <option selected="@(adminRole == RoleType.SuperAdmin.ToName())" value="@RoleType.SuperAdmin">Super Admin</option>
+                                    
                                 }
                             </select>
-                            <button type="submit">Change Role</button>
-                        </form>
-                        @*
-                        @if (adminRole.Equals(RoleType.Admin.ToName()))
-                        {
-                            <form asp-area="Admin" asp-controller="AdminManagement" asp-action="PromoteToSuperAdmin" method="post">
-                                <input type="hidden" name="email" value="@admin.Email"/>
-                                <button type="submit">Promote to SuperAdmin</button>
+                            <button type="submit">Update</button>
                             </form>
-                        }
-                        else if (adminRole.Equals(RoleType.SuperAdmin.ToName()))
-                        {
-                            <form asp-area="Admin" asp-controller="AdminManagement" asp-action="DemoteToAdmin" method="post">
+                            <form class="lock-form" asp-area="Admin" asp-controller="AdminManagement" asp-action="ToggleLock" method="post">
                                 <input type="hidden" name="email" value="@admin.Email"/>
-                                <button type="submit">Demote to Admin</button>
+                                <button type="submit" class="btn btn-delete">
+                                    @(admin.isLocked ? "Unlock" : "Lock")
+                                </button>
                             </form>
-                        }
-                        *@
-                        <form asp-area="Admin" asp-controller="AdminManagement" asp-action="ToggleLock" method="post">
-                            <input type="hidden" name="email" value="@admin.Email"/>
-                            <button type="submit">
-                                @(admin.isLocked ? "Unlock" : "Lock")
-                            </button>
-                        </form>
+                        </div>
                     </td>
                 </tr>
             }

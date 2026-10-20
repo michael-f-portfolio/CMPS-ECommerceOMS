@@ -5,58 +5,69 @@
     ViewData["Title"] = "Create Product";
 }
 
-<h2>Create Product</h2>
+<div class="form-page">
+    <div class="form-card">
+        <h2>Create Product</h2>
 
-<form asp-action="Create" method="post" enctype="multipart/form-data">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
     
-    <div>
-        <label asp-for="Name"></label>
-        <input asp-for="Name" />
-        <span asp-validation-for="Name"></span>
-    </div>
+            <div class="form-field">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" />
+                <span asp-validation-for="Name"></span>
+            </div>
 
-    <div>
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description"></textarea>
-        <span asp-validation-for="Description"></span>
-    </div>
+            <div class="form-field">
+                <label asp-for="Description"></label>
+                <textarea asp-for="Description"></textarea>
+                <span asp-validation-for="Description"></span>
+            </div>
 
-    <div>
-        <label asp-for="Category"></label>
+            <div class="form-field">
+                <label asp-for="Category"></label>
 
-        <select asp-for="Category">
-            <option value="">Select Category</option>
+                <select asp-for="Category">
+                    <option value="">Select Category</option>
 
-            @foreach (var category in ProductCategories.All)
-            {
-                <option value="@category">@category</option>
-            }
-        </select>
+                    @foreach (var category in ProductCategories.All)
+                    {
+                        <option value="@category">@category</option>
+                    }
+                </select>
 
-        <span asp-validation-for="Category"></span>
-    </div>
+                <span asp-validation-for="Category"></span>
+            </div>
     
-    <div>
-        <label asp-for="Price"></label>
-        <input asp-for="Price" />
-        <span asp-validation-for="Price"></span>
-    </div>
+            <div class="form-row">
+                <div class="form-field">
+                    <label asp-for="Price"></label>
+                    <input asp-for="Price" />
+                    <span asp-validation-for="Price"></span>
+                </div>
 
-    <div>
-        <label asp-for="QuantityOnHand"></label>
-        <input asp-for="QuantityOnHand" />
-        <span asp-validation-for="QuantityOnHand"></span>
-    </div>
+                <div class="form-field">
+                    <label asp-for="QuantityOnHand">Quantity On Hand</label>
+                    <input asp-for="QuantityOnHand" />
+                    <span asp-validation-for="QuantityOnHand"></span>
+                </div>
+            </div>
 
-    <div>
-        <label>Upload Image</label>
-        <input type="file" name="imageFile" />
-        <span asp-validation-for="ImageFile"></span>
-    </div>
 
-    <button type="submit">Create Product</button>
-    <a asp-action="Index" class="btn btn-edit">Cancel</a>
-</form>
+            <div class="form-field">
+                <label>Upload Image</label>
+                <input type="file" name="imageFile" />
+                <span asp-validation-for="ImageFile"></span>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn">Create Product</button>
+                <a asp-action="Index" class="btn btn-secondary">Cancel</a>                
+            </div>
+        </form>        
+    </div>
+</div>
+
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
