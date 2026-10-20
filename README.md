@@ -6,6 +6,7 @@ A role-based e-commerce Order Management System built with ASP.NET Core MVC, Ent
 
 https://cmps-ecommerce-gzgtg5dzh2d6gffb.canadacentral-01.azurewebsites.net/
 
+(Due to the use of Azure's free services, the initial load of the website might take up to 60 seconds)
 ---
 
 ## Features
